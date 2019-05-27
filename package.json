@@ -1,0 +1,15 @@
+{
+  "name": "bot-discord-psdk",
+  "version": "0.0.1",
+  "description": "Bot Discord donnant l'accès au rôle PSDK",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Walven",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.0",
+    "nodemon": "^1.19.1"
+  }
+}
