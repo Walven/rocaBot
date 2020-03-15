@@ -2,35 +2,25 @@ const Command = require('./command')
 var lang = ""
 
 FR_answers = [
-    "Fait, les liens sont dans les channels en bas. :)",
-    "Nous t\'avons donné le rôle, tu as maintenant accès aux liens. :)",
-    "C\'est fait, les liens sont dans les channels du bas.",
-    "Nous nous en sommes occupés, tu as le rôle. :)",
-    "C\'est fait, tu trouveras les liens plus bas dans les salons.",
-    "Voilà, c\'est donné ! Les liens sont dans les channels du bas.",
-    "C'est tout bon ! Tu peux trouver ce qu'il te faut dans les channels en bas.",
-    "C'est bon ! Tu as tout ce qu'il te faut dans les salons tout en bas",
-    "C'est fait, tu as maintenant accès aux channels contenant les liens.",
-    "Tu peux maintenant accéder aux liens, ils sont dans les channels du bas. :)"
+    "C\'est fait.",
+    "Et voilà !",
+    "C\'est donné !",
+    "C'est bon !",
+    "Voilà !"
 ]
 
 EN_answers = [
-    "Hey! You have now access to the lower channels. :)",
-    "Done, in the last section!",
-    "Voilà, links are in the channel below! :)",
-    "Done, you have now access to PSDK on the lower channels. :)",
-    "You can now download everything you need in the bottom channels",
-    "You can now access the channels at the bottom. :)",
-    "We gave you the access! Links are in the channel below.",
-    "You have now access to PSDK. Go to the bottom channels. :)",
-    "Done! Check the new channels at the bottom. :)",
-    "Done, you have now access to the lower channels to download PSDK!"
+    "Done!",
+    "Voilà!",
+    "You now have access.",
+    "We gave you the access!",
+    "All right!"
 ]
 
-module.exports = class accessSDK extends Command{
+module.exports = class accessSDK extends Command {
 
     static match(message) {
-        if (message.channel.name == "access_psdk") {
+        if (message.channel.name == "psdk-access") {
             
             // Check if the author is polite
             if ((/([Hh]ello)|([Hh]i)|([Hh]ey)|([Hh]owdy)|([Bb]onjour)|([Bb]onsoir)|([Ss]alut)|([Cc]oucou)/).test(message.content)) {
@@ -48,22 +38,32 @@ module.exports = class accessSDK extends Command{
                 }
             }
         }
-        
     }
 
     static action(message) {
         let author = message.member
-        let answerNb = Math.floor(Math.random()*(9-0+1)+0)
+        let answerNb = Math.floor(Math.random()*6)
 
-        message.react("✅")
-        author.addRole('483746581233926156')
+        if (author.roles.has('483746581233926156')) {
+            if (lang === "fr") {
+                var answer = "Tu as déjà les accès ! Tu peux télécharger Pokémon SDK dans <#483747311495938058>."
+            }
 
-        if (lang === "fr") {
-            var answer = FR_answers[answerNb]
-        }
+            if (lang === "en") {
+                var answer = "You've already got access! You can download Pokémon SDK in <#483747311495938058>."
+            }
+        } 
+        else {
+            message.react("✅")
+            author.addRole('483746581233926156')
 
-        if (lang === "en") {
-            var answer = EN_answers[answerNb]
+            if (lang === "fr") {
+                var answer = FR_answers[answerNb] + " Tu peux télécharger Pokémon SDK dans <#483747311495938058>. " + "(Et n'oublie pas de télécharger les ressources dans <#484069458206392331> !)"
+            }
+
+            if (lang === "en") {
+                var answer = EN_answers[answerNb] + " You can download Pokémon SDK in <#483747311495938058>. " + "(Don't forget to download the resources in <#484069458206392331>!)"
+            }
         }
 
         message.channel.send(author + " " + answer);
