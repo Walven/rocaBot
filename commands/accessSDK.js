@@ -95,13 +95,13 @@ module.exports = class accessSDK extends Command {
     static updateRole(message) {
         let author = message.member;
 
-        if (author.roles.has(SDK_OLD)) {
-            if (lang === 'en' && !author.roles.has(SDK_EN_ID)) {
+        if (author.roles.has(SDK_OLD) && !author.roles.has(SDK_EN_ID) && !author.roles.has(SDK_FR_ID)) {
+            if (lang === 'en') {
                 author.addRole(SDK_EN_ID) // For mention
                 message.channel.send(author + " Your role has been updated, you'll now receive english notifications.");
             }
 
-            if (lang === 'fr' && !author.roles.has(SDK_FR_ID)) {
+            if (lang === 'fr') {
                 author.addRole(SDK_FR_ID) // For mention
                 message.channel.send(author + " Ton rôle a été mis à jour et tu recevera désormais les notifications française.");
             }
