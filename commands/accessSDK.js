@@ -29,7 +29,7 @@ module.exports = class accessSDK extends Command {
             action = 'requestAccess';
             // Check if the author is polite
             if ((/([Hh]ello)|([Hh]i)|([Hh]ey)|([Hh]owdy)|([Bb]onjour)|([Bb]onsoir)|([Ss]alut)|([Cc]oucou)/).test(message.content)) {
-
+                
                 // Check if the question is in english
                 if ((/(?=.*(([Mm]ay)|([Cc]an)|([Cc]ould)|([Ww]ould)|([Dd]ownload)))(?=.*((access)|(link)|([Pp][Ss][Dd][Kk])|([Ss][Dd][Kk])))/).test(message.content)) {
                     lang = "en"
@@ -43,17 +43,27 @@ module.exports = class accessSDK extends Command {
                 }
             }
         }
-    }
-
-    static action(message) {
-        if (action === 'requestAccess') {
-            this.addRole(message);
+        else if (message.channel.name.includes('en-')) {
+            lang = 'en';
+            action = 'updateRoles';
+        }
+        else if (message.channel.name.includes('fr-')) {
+            lang = 'fr';
+            action = 'updateRoles';
         }
     }
 
-    static addRole(message, lang) {
+    static action(message) {
+        if(action === 'requestAccess') {
+            this.addRole(message);
+        } else if(action === 'updateRoles') {
+            this.updateRole(message);
+        }
+    }
+
+    static addRole(message) {
         let author = message.member
-        let answerNb = Math.floor(Math.random() * 6)
+        let answerNb = Math.floor(Math.random()*6)
 
         if (author.roles.has(SDK_OLD)) {
             if (lang === "fr") {
@@ -63,7 +73,8 @@ module.exports = class accessSDK extends Command {
             if (lang === "en") {
                 var answer = "You've already got access! You can download Pokémon SDK in <#483747311495938058>."
             }
-        } else {
+        } 
+        else {
             message.react("✅")
             author.addRole(SDK_OLD) // For access
 
@@ -79,5 +90,21 @@ module.exports = class accessSDK extends Command {
         }
 
         message.channel.send(author + " " + answer);
+    }
+
+    static updateRole(message) {
+        let author = message.member;
+
+        if (author.roles.has(SDK_OLD) && !author.roles.has(SDK_EN_ID) && !author.roles.has(SDK_FR_ID)) {
+            if (lang === 'en') {
+                author.addRole(SDK_EN_ID) // For mention
+                message.channel.send(author + " Your role has been updated, you'll now receive english notifications.");
+            }
+
+            if (lang === 'fr') {
+                author.addRole(SDK_FR_ID) // For mention
+                message.channel.send(author + " Ton rôle a été mis à jour et tu recevera désormais les notifications française.");
+            }
+        }
     }
 }
