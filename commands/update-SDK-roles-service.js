@@ -1,7 +1,6 @@
 const SDK_EN_ID = '697081052232941599';
 const SDK_FR_ID = '697081257087074365';
 const SDK_ACCESS = '483746581233926156';
-const role
 
 module.exports = class UpdateSDKRolesService {
     static action(message) {
