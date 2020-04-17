@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const accessSDK = require('./commands/accessSDK');
 const addPSP = require('./commands/addPSP');
 const adviceService = require('./commands/advice/advice-service');
+const updateSDKRolesService = require('./commands/update-SDK-roles-service');
 
 var bot = new Discord.Client({
     autorun: true
@@ -31,6 +32,8 @@ bot.on('message', function(message) {
             case 'advice':
                 adviceService.action(message, subargs);
                 break;
+            case 'updateRoles':
+                updateSDKRolesService.action(message);
         }
     }
 });
