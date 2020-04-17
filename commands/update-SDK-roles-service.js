@@ -3,7 +3,7 @@ const SDK_FR_ID = '697081257087074365';
 const SDK_ACCESS = '483746581233926156';
 const role
 
-module.exports = class AdviceService {
+module.exports = class UpdateSDKRolesService {
     static action(message) {
         if (message.member.roles.has('220155961292095498') || message.member.roles.has('661335599181070381')) {
             members = message.guild.roles.get(SDK_ACCESS).members;
