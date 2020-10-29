@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-//const config = require('./config.json');
+
 
 const accessSDK = require('./commands/accessSDK');
 const addPSP = require('./commands/addPSP');
@@ -35,8 +35,14 @@ bot.on('message', function(message) {
     }
 });
 
-// For Dev local
-// bot.login(config.token).then(
-bot.login(process.env.BOT_TOKEN).then(
-    console.log('Ready')
-);
+if (process.env.BOT_TOKEN) {
+    bot.login(process.env.BOT_TOKEN).then(
+        console.log('Ready')
+    );
+} // For Dev local
+else {
+    const config = require('./config.json');
+    bot.login(config.token).then(
+        console.log('Ready')
+    );
+}
