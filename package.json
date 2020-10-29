@@ -9,7 +9,7 @@
     "author": "Walven",
     "license": "ISC",
     "dependencies": {
-        "discord.js": "^11.5.0",
-        "nodemon": "^1.19.1"
+        "discord.js": "^11.6.4",
+        "nodemon": "^1.19.4"
     }
 }
