@@ -1,48 +1,101 @@
+const fs = require('fs');
 const Discord = require('discord.js');
+const { prefix, psdkAccessChannelName, psdkRoleName } = require('./config.json')
 
+const client = new Discord.Client();
+client.commands = new Discord.Collection();
 
-const accessSDK = require('./commands/accessSDK');
-const addPSP = require('./commands/addPSP');
-const adviceService = require('./commands/advice/advice-service');
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-var bot = new Discord.Client({
-    autorun: true
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    
+    // set a new item in the Collection
+    // with the key as the command name and the value as the exported module
+    client.commands.set(command.name, command);
+}
+
+client.once('ready', () => {
+    console.log('rocaBot is ready to manage everything')
 })
 
-bot.on('message', function(message) {
-
-    if (message.author == bot.user.id) {
-        return;
-    }
-
-    accessSDK.parse(message);
-
-    if (message.content.substring(0, 1) == '!') {
-        let args = message.content.substring(1).split(' ');
-        const subargs = args.splice(1);
-
-        switch (args[0]) {
-            case 'addPSP':
-            case 'addpsp':
-                addPSP.parse(message);
-                break;
-            case 'howto':
-            case 'hwt':
-            case 'advice':
-                adviceService.action(message, subargs);
-                break;
+client.on('message', message => {
+    if(message.author.bot || message.channel.type === 'dm') return;
+    
+    if(message.content.startsWith(prefix)) {
+        const args = message.content.slice(prefix.length).trim().split(/ +/);
+        const commandName = args.shift().toLowerCase();
+        
+        if (!client.commands.has(commandName)) return;
+        const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+        
+        if (!command) return message.channel.send('That command do not exist');
+        
+        if (command.args && !args.length) {
+            let reply =  message.channel.send(`You didn't provide any arguments, ${message.author}`)
+            if (command.usage) {
+                replay += `\nThe proper usage would be: \`${prefix}${command} ${command.usage}\``;
+            }
+            
+            return message.channel.send(reply);
         }
+        
+        try{
+            command.execute(message, args);
+        } catch (error) {
+            console.error(error);
+            message.reply('There was an error trying to execute that command');
+        }
+        
+    }
+    else if(message.channel.name === psdkAccessChannelName) {
+        const commandName = "accessSDK";
+        const command = client.commands.get(commandName);
+        
+        if (!command) return message.channel.send('accessSDK command file looks missing');
+        
+        try {
+            command.execute(message);
+        } catch (error) {
+            console.error(error);
+            message.reply('There was an error trying to give access');
+        }
+    }
+    else if(message.channel.name.startsWith("fr-") && message.member.roles.cache.some(role => role.name === psdkRoleName.old)){
+        const commandName = "accessSDK";
+        const command = client.commands.get(commandName);
+        
+        if (!command) return message.channel.send('accessSDK command file looks missing');
+        
+        try {
+            command.updateRoles(message, 'fr');
+        } catch (error) {
+            console.error(error);
+            message.reply('There was an error trying to give access');
+        }
+    }
+    else if(message.channel.name.startsWith('en-') && message.member.roles.cache.some(role => role.name === psdkRoleName.old)){
+        const commandName = "accessSDK";
+        const command = client.commands.get(commandName);
+        
+        if (!command) return message.channel.send('accessSDK command file looks missing');
+        
+        try {
+            command.updateRoles(message, 'en');
+        } catch (error) {
+            console.error(error);
+            message.reply('There was an error trying to give access');
+        }
+    }
+    else {
+        return;
     }
 });
 
 if (process.env.BOT_TOKEN) {
-    bot.login(process.env.BOT_TOKEN).then(
-        console.log('Ready')
-    );
-} // For Dev local
+    client.login(process.env.BOT_TOKEN);
+} // For local dev
 else {
-    const config = require('./config.json');
-    bot.login(config.token).then(
-        console.log('Ready')
-    );
+    const devConfig = require("./dev-config.json")
+    client.login(devConfig.token);
 }
