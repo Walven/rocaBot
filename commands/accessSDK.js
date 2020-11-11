@@ -75,14 +75,14 @@ module.exports = {
             case 'en': {
                 if(!message.member.roles.cache.some(role => role.name === psdkRoleName.en)) {
                     message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.en))
+                    message.reply(`We gave you the ${enRole.name} role`)
                 }
-                message.reply(`We gave you the ${enRole.name} role`)
             }
             case 'fr': {
                 if(!message.member.roles.cache.some(role => role.name === psdkRoleName.fr)) {
                     message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.fr))
+                    message.reply(`Nous t'avons donné le rôle ${enRole.name}`)
                 }
-                message.reply(`Nous t'avons donné le rôle ${enRole.name}`)
             }
         }
     }
