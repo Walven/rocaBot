@@ -7,5 +7,6 @@
         "old": "SDK"
     },
     "psdkDownloadChannelName": "windows",
-    "psdkRessourcesChannelName": "ressources"
+    "psdkRessourcesChannelName": "ressources",
+    "channelLog": "psdk-dev"
 }
