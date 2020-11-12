@@ -1,7 +1,4 @@
-const Command = require('./command');
-var lang = "";
-var action = '';
-
+const {psdkRoleName, psdkDownloadChannelName, psdkAccessChannelName} = require('../config.json');
 const FR_answers = [
     "C\'est fait.",
     "Et voilà !",
@@ -18,94 +15,75 @@ const EN_answers = [
     "All right!",
 ];
 
-const SDK_EN_ID = '697081052232941599';
-const SDK_FR_ID = '697081257087074365';
-const SDK_OLD = '483746581233926156';
-
-module.exports = class accessSDK extends Command {
-
-    static match(message) {
-        if (message.channel.name == "psdk-access") {
-            action = 'requestAccess';
-            // Check if the author is polite
-            if ((/([Hh]ello)|([Hh]i)|([Hh]ey)|([Hh]owdy)|([Bb]onjour)|([Bb]onsoir)|([Ss]alut)|([Cc]oucou)/).test(message.content)) {
-
-                // Check if the question is in english
-                if ((/(?=.*(([Mm]ay)|([Cc]an)|([Cc]ould)|([Ww]ould)|([Dd]ownload)))(?=.*((access)|(link)|([Pp][Ss][Dd][Kk])|([Ss][Dd][Kk])))/).test(message.content)) {
-                    lang = "en"
-                    return true
-                }
-
-                // Check if the question is in french
-                if ((/(?=.*(([Pp]ourrais)|([Vv]oudrais)|([Pp]ossibilit[eé])|([Ss]erait)|([Pp]ossible)|([Aa]urais)|([Aa]voir)|([Pp]uis)|([Pp]ouvez)|([Dd]onne)|(t[éeè]l[éeè]charger)|(t[éeè]l[éeè]charg[éeè])))(?=.*((acc[eèé]s)|(lien)|([Pp][Ss][Dd][Kk])|([Ss][Dd][Kk])))/).test(message.content)) {
-                    lang = "fr"
-                    return true
-                }
+module.exports = {
+    name: 'accessSDK',
+    description: 'Give SDK roles',
+    args: false,
+    // Give SDK Roles in psdk-access channel
+    execute(message) {
+        let lang = "en";
+        let answerNb = Math.floor(Math.random() * 5)
+        
+        //Check if the author is polite
+        if ((/([Hh]ello)|([Hh]i)|([Hh]ey)|([Hh]owdy)|([Bb]onjour)|([Bb]onsoir)|([Ss]alut)|([Cc]oucou)/).test(message.content)) {
+            
+            // Check if the question is in english
+            if ((/(?=.*(([Mm]ay)|([Cc]an)|([Cc]ould)|([Ww]ould)|([Dd]ownload)))(?=.*((access)|(link)|([Pp][Ss][Dd][Kk])|([Ss][Dd][Kk])))/).test(message.content)) {
+                lang = 'en'
             }
-        } else if (message.channel.name.includes('en-')) {
-            lang = 'en';
-            action = 'updateRoles';
-        } else if (message.channel.name.includes('fr-')) {
-            lang = 'fr';
-            action = 'updateRoles';
-        }
-    }
-
-    static action(message) {
-        if (action === 'requestAccess') {
-            this.addRole(message);
-        } else if (action === 'updateRoles') {
-            this.updateRole(message);
-        }
-    }
-
-    static addRole(message) {
-        let author = message.member
-        let answerNb = Math.floor(Math.random() * 6)
-
-        if (author != null && author.roles != null) {
-            if (author.roles.has(SDK_OLD)) {
-                if (lang === "fr") {
-                    var answer = "Tu as déjà les accès ! Tu peux télécharger Pokémon SDK dans <#483747311495938058>."
+            
+            // Check if the question is in french
+            if ((/(?=.*(([Pp]ourrais)|([Vv]oudrais)|([Pp]ossibilit[eé])|([Ss]erait)|([Pp]ossible)|([Aa]urais)|([Aa]voir)|([Pp]uis)|([Pp]ouvez)|([Dd]onne)|(t[éeè]l[éeè]charger)|(t[éeè]l[éeè]charg[éeè])))(?=.*((acc[eèé]s)|(lien)|([Pp][Ss][Dd][Kk])|([Ss][Dd][Kk])))/).test(message.content)) {
+                lang = 'fr'
+            }
+            if (message.member != null) {
+                const oldRole = (message.member.guild.roles.cache.find(role => role.name === psdkRoleName.old));
+                const frRole = (message.member.guild.roles.cache.find(role => role.name === psdkRoleName.fr));
+                const enRole = (message.member.guild.roles.cache.find(role => role.name === psdkRoleName.en));
+                const downloadChannel = message.member.guild.channels.cache.find(channel => channel.name == psdkDownloadChannelName);
+                const ressourceChannel = message.member.guild.channels.cache.find(channel => channel.name == psdkAccessChannelName);
+                
+                if (message.member.roles.cache.some(role => role.name === psdkRoleName.old)) {
+                    if (lang === "fr") {
+                        var answer = `Tu as déjà les accès ! Tu peux télécharger Pokémon SDK dans <#${downloadChannel.id}>.`
+                    }
+                    
+                    if (lang === "en") {
+                        var answer = `You've already got access! You can download Pokémon SDK in <#${downloadChannel.id}>.`
+                    }
+                } else {
+                    message.react("✅")
+                    if (lang === "fr") {
+                        message.member.roles.add([frRole, oldRole]) // For mention
+                        var answer = FR_answers[answerNb] + `Tu peux télécharger Pokémon SDK dans <#${downloadChannel.id}>. (Et n'oublie pas de télécharger les ressources dans <#${ressourceChannel.id}> !)`
+                    }
+                    
+                    if (lang === "en") {
+                        message.member.roles.add([enRole, oldRole]) // For mention
+                        var answer = EN_answers[answerNb] + `You can download Pokémon SDK in <#${downloadChannel.id}>. (Don't forget to download the resources in <#${ressourceChannel.id}>!)`
+                    }
                 }
-
-                if (lang === "en") {
-                    var answer = "You've already got access! You can download Pokémon SDK in <#483747311495938058>."
-                }
+                message.channel.send(`${message.member} ${answer}`);
             } else {
-                message.react("✅")
-                author.addRole(SDK_OLD) // For access
-
-                if (lang === "fr") {
-                    author.addRole(SDK_FR_ID) // For mention
-                    var answer = FR_answers[answerNb] + " Tu peux télécharger Pokémon SDK dans <#483747311495938058>. " + "(Et n'oublie pas de télécharger les ressources dans <#484069458206392331> !)"
-                }
-
-                if (lang === "en") {
-                    author.addRole(SDK_EN_ID) // For mention
-                    var answer = EN_answers[answerNb] + " You can download Pokémon SDK in <#483747311495938058>. " + "(Don't forget to download the resources in <#484069458206392331>!)"
-                }
+                message.channel.send("Something went wrong with the last message")
             }
-            message.channel.send(author + " " + answer);
-        } else {
-            message.channel.send("Something went wrong with the last message")
         }
-
-    }
-
-    static updateRole(message) {
-        let author = message.member;
-
-        if (author.roles.has(SDK_OLD) && !author.roles.has(SDK_EN_ID) && !author.roles.has(SDK_FR_ID)) {
-            if (lang === 'en') {
-                author.addRole(SDK_EN_ID) // For mention
-                message.channel.send(author + " Your role has been updated, you'll now receive english notifications.");
+    },
+    // Update roles for people withou language SDK roles
+    updateRoles(message, lang) {
+        switch(lang){
+            case 'en': {
+                if(!message.member.roles.cache.some(role => role.name === psdkRoleName.en)) {
+                    message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.en))
+                    message.reply(`We gave you the ${enRole.name} role`)
+                }
             }
-
-            if (lang === 'fr') {
-                author.addRole(SDK_FR_ID) // For mention
-                message.channel.send(author + " Ton rôle a été mis à jour et tu recevera désormais les notifications française.");
+            case 'fr': {
+                if(!message.member.roles.cache.some(role => role.name === psdkRoleName.fr)) {
+                    message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.fr))
+                    message.reply(`Nous t'avons donné le rôle ${enRole.name}`)
+                }
             }
         }
     }
-}
+};
