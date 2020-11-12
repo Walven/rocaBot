@@ -1,3 +1,11 @@
 {
-    "token": "Njg4ODY2ODY2ODEwMDYwODIx.Xm6jQw.o0xTUVAH2MpZ7bDdxL-Ce2cD0D0"
+    "prefix": "!",
+    "psdkAccessChannelName": "psdk-access",
+    "psdkRoleName": {
+        "en": "SDK-EN",
+        "fr": "SDK-FR",
+        "old": "SDK"
+    },
+    "psdkDownloadChannelName": "windows",
+    "psdkRessourcesChannelName": "ressources"
 }
