@@ -68,24 +68,24 @@ module.exports = {
                 message.channel.send("Something went wrong with the last message")
             }
         }
-    },
-    // Update roles for people withou language SDK roles
-    updateRoles(message, lang) {
-        switch (lang) {
-            case 'en':
-                {
-                    if (!message.member.roles.cache.some(role => role.name === psdkRoleName.en)) {
-                        message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.en))
-                        message.reply(`We gave you the ${enRole.name} role`)
-                    }
-                }
-            case 'fr':
-                {
-                    if (!message.member.roles.cache.some(role => role.name === psdkRoleName.fr)) {
-                        message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.fr))
-                        message.reply(`Nous t'avons donné le rôle ${enRole.name}`)
-                    }
-                }
-        }
     }
+    // // Update roles for people withou language SDK roles
+    // updateRoles(message, lang) {
+    //     switch (lang) {
+    //         case 'en':
+    //             {
+    //                 if (!message.member.roles.cache.some(role => role.name === psdkRoleName.en)) {
+    //                     message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.en))
+    //                     message.reply(`We gave you the ${enRole.name} role`)
+    //                 }
+    //             }
+    //         case 'fr':
+    //             {
+    //                 if (!message.member.roles.cache.some(role => role.name === psdkRoleName.fr)) {
+    //                     message.member.roles.add(message.member.guild.roles.cache.find(role => role.name === psdkRoleName.fr))
+    //                     message.reply(`Nous t'avons donné le rôle ${enRole.name}`)
+    //                 }
+    //             }
+    //     }
+    // }
 };
