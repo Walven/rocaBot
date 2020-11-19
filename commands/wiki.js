@@ -11,12 +11,10 @@ module.exports = {
     execute(message, args) {
         switch(args[0]){
             case 'fr':
-            let answer = wiki.frSentence + wikiUrl + url.wiki.frPrefix + url.wiki.main;
-             message.channel.send(answer);
+            message.channel.send(wiki.frSentence + wikiUrl + url.wiki.frPrefix + url.wiki.main);
             break;  
             case 'en':
-            answer = wiki.enSentence + wikiUrl + url.wiki.enPrefix + url.wiki.main;
-            message.channel.send(answer);
+            message.channel.send(wiki.enSentence + wikiUrl + url.wiki.enPrefix + url.wiki.main);
             break;
             default:
             message.channel.send('Bad arguments the usage of the command is : ' + this.usage);
