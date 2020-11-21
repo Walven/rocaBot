@@ -7,7 +7,7 @@ module.exports = {
     name: 'wiki',
     description: 'Create a link to the wiki',
     args: true,
-    usage: "wiki <en | fr>",
+    usage: "!wiki <en | fr>",
     execute(message, args) {
         switch(args[0]){
             case 'fr':
