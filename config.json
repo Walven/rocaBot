@@ -8,5 +8,25 @@
     },
     "psdkDownloadChannelName": "windows",
     "psdkRessourcesChannelName": "ressources",
-    "channelLog": "psdk-dev"
+    "channelLog": "psdk-dev",
+    "url": {
+        "psdk":"https://psdk.pokemonworkshop.fr/",
+        "wiki": {
+            "prefix": "wiki/",
+            "enPrefix":"en/",
+            "frPrefix":"fr/",
+            "main":"index.html"
+        },
+        "doc": {
+            "prefix":"yard/"
+        }
+    },
+    "wiki": {
+        "frSentence":"Tu trouveras tout un semble d'informations sur le wiki de PSDK: ",
+        "enSentence":"You'll find a lot of informations on the PSDK's wiki : "
+    },
+    "doc": {
+        "frSentence":"La documentation technique de PSDK t'aidera à mieux comprendre comment le code est organisé : ",
+        "enSentence":"Here you can find the PSDK's technical documentation to better understand how it's organized: "
+    }
 }
