@@ -26,7 +26,7 @@ module.exports = {
 		.setDescription('Get link to the documentation')
 		.addStringOption(option =>
 			option.setName('lang')
-				.setDescription('language')
+				.setDescription('Choose reply language')
 				.setRequired(false)
 				.addChoice('fr', 'fr')
 				.addChoice('en', 'en')),
