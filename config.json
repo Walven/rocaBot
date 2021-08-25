@@ -1,32 +1,5 @@
 {
-    "prefix": "!",
-    "psdkAccessChannelName": "psdk-access",
-    "psdkRoleName": {
-        "en": "SDK-EN",
-        "fr": "SDK-FR",
-        "old": "SDK"
-    },
-    "psdkDownloadChannelName": "windows",
-    "psdkRessourcesChannelName": "ressources",
-    "channelLog": "psdk-dev",
-    "url": {
-        "psdk":"https://psdk.pokemonworkshop.fr/",
-        "wiki": {
-            "prefix": "wiki/",
-            "enPrefix":"en/",
-            "frPrefix":"fr/",
-            "main":"index.html"
-        },
-        "doc": {
-            "prefix":"yard/"
-        }
-    },
-    "wiki": {
-        "frSentence":"Tu trouveras tout un semble d'informations sur le wiki de PSDK: ",
-        "enSentence":"You'll find a lot of informations on the PSDK's wiki : "
-    },
-    "doc": {
-        "frSentence":"La documentation technique de PSDK t'aidera à mieux comprendre comment le code est organisé : ",
-        "enSentence":"Here you can find the PSDK's technical documentation to better understand how it's organized: "
-    }
+  "token": "ODgwMTMwNDA0MTczMDkwODY3.YSZzUA.c_sogQwIE3A5lgSd5EuJl9GjG6I",
+  "clientId": "880130404173090867",
+  "guildId": "120963143886307329"
 }
