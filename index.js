@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, psdkAccessChannelName, channelLog } = require('./config.json')
+const config = require('./config.json')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -66,6 +67,8 @@ client.on('message', message => {
     }
 });
 
+// EVENTS
+
 // When a new member joins the server
 client.on('guildMemberAdd', member => {
     if (member.user.bot) return;
@@ -99,7 +102,37 @@ function sendError(message, error) {
     )
 }
 
+// Add a role when a member reacts to a message
+client.on('messageReactionAdd', (reaction, user) => {
+    if (user.bot) return;
+    console.log(`Reaction added by ${user.username}. Emoji name: ${reaction.emoji.name}.`);
 
+    if (!reaction.message.guild) return;
+    const reactionRoleElem = config.reactionRole[reaction.message.id];
+    if (!reactionRoleElem) return;
+    const prop = reaction.emoji.id ? 'id' : 'name';
+    const emoji = reactionRoleElem.emojis.find(emoji => emoji[prop] === reaction.emoji[prop]);
+    if (emoji) {
+        console.log(`Add the ${emoji.roles} role to ${user.username}.`);
+        reaction.message.guild.member(user).roles.add(emoji.roles);
+    }
+});
+
+// Remove a role when a member reacts to a message
+client.on('messageReactionRemove', (reaction, user) => {
+    if (user.bot) return;
+    console.log(`Reaction removed by ${user.username}. Emoji name: ${reaction.emoji.name}.`);
+
+    if (!reaction.message.guild) return;
+    const reactionRoleElem = config.reactionRole[reaction.message.id];
+    if (!reactionRoleElem || !reactionRoleElem.removable) return;
+    const prop = reaction.emoji.id ? 'id' : 'name';
+    const emoji = reactionRoleElem.emojis.find(emoji => emoji[prop] === reaction.emoji[prop]);
+    if (emoji) {
+        console.log(`Remove the ${emoji.roles} role to ${user.username}.`);
+        reaction.message.guild.member(user).roles.remove(emoji.roles);
+    }
+});
 
 if (process.env.BOT_TOKEN) {
     client.login(process.env.BOT_TOKEN);
