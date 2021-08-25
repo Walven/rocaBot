@@ -1,13 +1,13 @@
 {
     "prefix": "!",
-    "psdkAccessChannelName": "psdk-access",
+    "psdkAccessChannelName": "🔐・psdk-access",
     "psdkRoleName": {
         "en": "SDK-EN",
         "fr": "SDK-FR",
         "old": "SDK"
     },
-    "psdkDownloadChannelName": "windows",
-    "psdkRessourcesChannelName": "ressources",
+    "psdkDownloadChannelName": "🔗・psdk-links",
+    "psdkRessourcesChannelName": "📦・ressources",
     "channelLog": "psdk-dev",
     "url": {
         "psdk":"https://psdk.pokemonworkshop.fr/",
@@ -22,11 +22,35 @@
         }
     },
     "wiki": {
-        "frSentence":"Tu trouveras tout un semble d'informations sur le wiki de PSDK: ",
-        "enSentence":"You'll find a lot of informations on the PSDK's wiki : "
+        "frSentence":"Tu trouveras tout un ensemble d'informations sur le wiki de PSDK : ",
+        "enSentence":"You'll find a lot of informations on the PSDK's wiki: "
     },
     "doc": {
         "frSentence":"La documentation technique de PSDK t'aidera à mieux comprendre comment le code est organisé : ",
         "enSentence":"Here you can find the PSDK's technical documentation to better understand how it's organized: "
+    },
+    "reactionRole": {
+        "530147820993511467": {
+            "emojis": [{
+                "name": "👍",
+                "roles": "874710629347393566"
+            }]
+        },
+        "530438121045884939": {
+            "emojis": [{
+                "name": "👍",
+                "roles": "874710629347393566"
+            }]
+        },
+        "880010902760468491": {
+            "removable": true,
+            "emojis": [{
+                "name": "🥖",
+                "roles": "874710106917437461"
+            }, {
+                "name": "🌐",
+                "roles": "874710281723478076"
+            }]
+        }
     }
 }
