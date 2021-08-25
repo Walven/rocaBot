@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-    console.log('rocaBot is ready to manage everything')
+    console.log(`${client.user.username} is ready to manage everything!`)
 })
 
 client.on('message', message => {
@@ -66,12 +66,40 @@ client.on('message', message => {
     }
 });
 
+// When a new member joins the server
+client.on('guildMemberAdd', member => {
+    if (member.user.bot) return;
+
+    const channelId = '143824995867557888';
+    const channelRules = '360855474284789772';
+    const messageFr = `:french_bread: Bienvenue sur le serveur de la communauté **Pokémon Workshop**, <@${member.id}> ! Ici, tu trouveras de quoi **Télécharger et apprendre à utiliser PokémonSDK**, pour créer ton propre **fangame Pokémon**.\nTu pourras aussi discuter du logiciel et rencontrer toute une communauté de fans de Pokémon et de création !\n\n:arrow_forward: Pour accéder au reste du serveur et à la sélection des rôles, lis les <#${channelRules}> , ajoute un :thumbsup: et on est parti ! :arrow_backward:`;
+    const messageEn = `:globe_with_meridians: Welcome on the **Pokémon Workshop** server, <@${member.id}> ! Here, you'll be able to **Download & Learn to use PokémonSDK**, in order to create your own **Pokémon fangame**.\nYou'll also find channels to talk about the software, but also with a big Pokémon & Makers community!\n\n:arrow_forward: To access the rest of the server and the role selection, please make sure to read the <#${channelRules}> , add a :thumbsup: and off we go! :arrow_backward:`;
+    if (member.user.locale === 'fr') {
+        member.guild.channels.cache.get(channelId).send(messageFr);
+    } else {
+        member.guild.channels.cache.get(channelId).send(messageEn);
+    }
+    console.log(`${member.user.username} joined the Pokémon Workshop server!`)
+});
+
+// When a new member leaves the server
+client.on('guildMemberRemove', member => {
+    if (member.user.bot) return;
+
+    const channelId = '143824995867557888';
+    const message = `:french_bread: ${member.user.username} quitte le serveur ! À bientôt ! :gear:\n\n:globe_with_meridians: ${member.user.username} left the server! See you soon! :gear:`;
+    member.guild.channels.cache.get(channelId).send(message);
+    console.log(`${member.user.username} left the Pokémon Workshop server!`)
+});
+
 function sendError(message, error) {
     message.member.guild.channels.cache.find(channel => channel.name == channelLog).send(
         `RocaBot have a problem with "${message.content}" in <#${message.channel.id}> :\n
         ${error}`
     )
 }
+
+
 
 if (process.env.BOT_TOKEN) {
     client.login(process.env.BOT_TOKEN);
