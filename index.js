@@ -129,23 +129,6 @@ client.on('guildMemberAdd', member => {
     console.log(`${member.user.username} joined the Pokémon Workshop server!`)
 });
 
-// When a new member leaves the server
-client.on('guildMemberRemove', member => {
-    if (member.user.bot) return;
-
-    const channelId = '143824995867557888';
-    const message = `:french_bread: ${member.user.username} quitte le serveur ! À bientôt ! :gear:\n\n:globe_with_meridians: ${member.user.username} left the server! See you soon! :gear:`;
-    member.guild.channels.cache.get(channelId).send(message);
-    console.log(`${member.user.username} left the Pokémon Workshop server!`)
-});
-
-function sendError(message, error) {
-    message.member.guild.channels.cache.find(channel => channel.name == channelLog).send(
-        `RocaBot have a problem with "${message.content}" in <#${message.channel.id}> :\n
-        ${error}`
-    )
-}
-
 // Add a role when a member reacts to a message
 client.on('messageReactionAdd', (reaction, user) => {
     if (user.bot) return;
@@ -177,6 +160,13 @@ client.on('messageReactionRemove', (reaction, user) => {
         reaction.message.guild.member(user).roles.remove(emoji.roles);
     }
 });
+
+function sendError(message, error) {
+    message.member.guild.channels.cache.find(channel => channel.name == channelLog).send(
+        `RocaBot have a problem with "${message.content}" in <#${message.channel.id}> :\n
+        ${error}`
+    )
+}
 
 if (process.env.BOT_TOKEN) {
     client.login(process.env.BOT_TOKEN);
