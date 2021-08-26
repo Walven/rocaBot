@@ -1,0 +1,22 @@
+{
+  "url": {
+    "documentation": "https://psdk.pokemonworkshop.com/yard/",
+    "guide": {
+      "index": {
+        "en": "https://psdk.pokemonworkshop.fr/wiki/en/index.html",
+        "fr": "https://psdk.pokemonworkshop.fr/wiki/fr/index.html"
+      },
+      "data": {
+        "abilities": "https://psdk.pokemonworkshop.com/db/db_ability.html",
+        "items": "https://psdk.pokemonworkshop.com/db/db_item.html",
+        "moves": "https://psdk.pokemonworkshop.com/db/db_skill.html",
+        "pokemon": "https://psdk.pokemonworkshop.com/db/db_pokemon.html"
+      },
+      "tutorial": {
+        "event": "https://psdk.pokemonworkshop.fr/wiki/fr/event_making/index.html",
+        "rubyhost": "https://psdk.pokemonworkshop.fr/wiki/fr/ruby_host/index.html",
+        "tiled": "https://psdk.pokemonworkshop.fr/wiki/fr/tiled/index.html"
+      }
+    }
+  }
+}

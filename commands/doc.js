@@ -38,7 +38,7 @@ module.exports = {
 			.addComponents(
 				new MessageButton()
 					.setStyle('LINK')
-					.setURL(config.link.documentation)
+					.setURL(config.url.documentation)
 					.setLabel(commandConfig.buttonLabel[lang]),
 			);
 		await interaction.reply({ content: commandConfig.replySentence[lang], components: [row] });
