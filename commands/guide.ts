@@ -1,11 +1,11 @@
 /**
  * Sends a button with a link to the guides
  */
-const { MessageActionRow, MessageButton } = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { MessageActionRow, MessageButton } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 // Global config
-const config = require('../config.json');
+import config from '../config.json';
 
 // Local config
 const commandConfig = {

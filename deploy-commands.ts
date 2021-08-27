@@ -1,16 +1,18 @@
 /**
  * Run this file to register slash commands to the guild
  */
-require('dotenv').config();
-const fs = require('fs');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+import dotenv from 'dotenv';
+dotenv.config()
+import fs from 'fs';
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
 const { CLIENT_ID, GUILD_ID, TOKEN } = process.env;
 
 // Read command files
 const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./commands').filter((file: string) => file.endsWith('.ts'));
 for (const file of commandFiles) {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const command = require(`./commands/${file}`);
 	commands.push(command.data.toJSON());
 }

@@ -1,11 +1,15 @@
 /**
  * Sends a button with a link to the documentation
  */
-const { MessageActionRow, MessageButton } = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { SlashCommandStringOption } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
+import command from "./types/command";
+import { MessageActionRow, MessageButton } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 // Global config
-const config = require('../config.json');
+import config from '../config.json';
+
 
 // Local config
 const commandConfig = {
@@ -19,12 +23,12 @@ const commandConfig = {
 	},
 };
 
-module.exports = {
+const command: command = {
 	// Build slash command
 	data: new SlashCommandBuilder()
 		.setName('doc')
 		.setDescription('Get link to the documentation')
-		.addStringOption(option =>
+		.addStringOption((option: SlashCommandStringOption) =>
 			option.setName('lang')
 				.setDescription('Choose reply language')
 				.setRequired(false)
@@ -32,15 +36,17 @@ module.exports = {
 				.addChoice('en', 'en')),
 
 	// Command action
-	async execute(interaction) {
+	async execute(interaction: CommandInteraction) {
 		const lang = interaction.options.getString('lang');
 		const row = new MessageActionRow()
 			.addComponents(
 				new MessageButton()
 					.setStyle('LINK')
 					.setURL(config.url.documentation)
-					.setLabel(commandConfig.buttonLabel[lang]),
+					.setLabel(commandConfig.buttonLabel[lang || 'fr']),
 			);
-		await interaction.reply({ content: commandConfig.replySentence[lang], components: [row] });
-	},
-};
+		await interaction.reply({ content: commandConfig.replySentence[lang || 'fr'], components: [row] });
+	}
+}
+
+module.exports = command;
