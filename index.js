@@ -26,9 +26,6 @@ client.once('ready', () => {
 
 // COMMANDS
 
-// const usersSpamMap = new Map();
-// const usersSpamContentMap = new Map();
-
 client.on('message', message => {
     if (message.author.bot || message.channel.type === 'dm') return;
 
@@ -72,43 +69,6 @@ client.on('message', message => {
             sendError(message, error)
         }
     } else {
-/*
-        if (usersSpamMap.has(message.author.id)) {
-            const messageSpamLimit = 6
-            const messageSpamLimitKick = 9
-
-            const userData = usersSpamMap.get(message.author.id);
-            let {msgCount} = userData;
-            msgCount += 1;
-            userData.msgCount = msgCount;
-            usersSpamMap.set(message.author.id, userData);
-
-            const userMessageContent = usersSpamContentMap.get(message.author.id);
-            let {msgContent} = userMessageContent;
-            if (msgCount >= messageSpamLimit) message.delete();
-            if (msgCount === messageSpamLimitKick && msgContent != message.content) {
-                message.guild.member(message.author.id).kick({reason: 'rocaBot: Kick Anti-Spam'});
-                return;
-            }
-            if (msgCount === messageSpamLimit && msgContent === message.content) {
-                message.guild.member(message.author.id).ban({reason: 'rocaBot: Ban Anti-Spam'});
-                return;
-            }
-            msgContent = message.content;
-            userMessageContent.msgContent = msgContent;
-            usersSpamContentMap.set(message.author.id, userMessageContent);
-        } else {
-            usersSpamMap.set(message.author.id, {
-                msgCount: 1
-            });
-            usersSpamContentMap.set(message.author.id, {
-                msgContent: message.content
-            });
-            setTimeout(() => {
-                usersSpamMap.delete(message.author.id);
-            }, 10000);
-        }
-*/
         return;
     }
 });
