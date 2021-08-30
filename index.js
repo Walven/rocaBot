@@ -1,4 +1,5 @@
 require('dotenv').config();
+const config = require ('./config.json');
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 
@@ -12,10 +13,12 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
-client.once('ready', () => {
+client.once('ready', async () => {
 	console.log('My body is ready!');
+	setSlashCommandRights(client);
 });
 
+// Handle commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -33,3 +36,13 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.login(process.env.TOKEN);
+
+/**
+ * Set command rights
+ * @param {Client} discordClient
+ */
+async function setSlashCommandRights(discordClient) {
+	// Admin command
+	const adminCommand = await discordClient.guilds.cache.get(config.guild.id).commands.fetch('881982185308049408');
+	await adminCommand.permissions.add({ permissions: [{ id: config.role.staff, type: 'ROLE', permission: true }] });
+}

@@ -1,4 +1,10 @@
 {
+  "guild": {
+    "id": "120963143886307329"
+  },
+  "role": {
+    "staff": "773700444857434113"
+  },
   "url": {
     "documentation": "https://psdk.pokemonworkshop.com/yard/",
     "guide": {
@@ -13,9 +19,18 @@
         "pokemon": "https://psdk.pokemonworkshop.com/db/db_pokemon.html"
       },
       "tutorial": {
-        "event": "https://psdk.pokemonworkshop.fr/wiki/fr/event_making/index.html",
-        "rubyhost": "https://psdk.pokemonworkshop.fr/wiki/fr/ruby_host/index.html",
-        "tiled": "https://psdk.pokemonworkshop.fr/wiki/fr/tiled/index.html"
+        "event": {
+          "en": "https://psdk.pokemonworkshop.fr/wiki/en/event_making/index.html",
+          "fr": "https://psdk.pokemonworkshop.fr/wiki/fr/event_making/index.html"
+        },
+        "rubyhost": {
+          "en": "https://psdk.pokemonworkshop.fr/wiki/en/ruby_host/index.html",
+          "fr": "https://psdk.pokemonworkshop.fr/wiki/fr/ruby_host/index.html"
+        },
+        "tiled": {
+          "en": "https://psdk.pokemonworkshop.fr/wiki/en/tiled/index.html",
+          "fr": "https://psdk.pokemonworkshop.fr/wiki/fr/tiled/index.html"
+        }
       }
     }
   }

@@ -153,7 +153,7 @@ module.exports = {
 			break;
 		case 'tutorial':
 			replySentence = commandConfig.replySentence.tutorial[subject][lang];
-			button.setURL(config.url.guide.tutorial[subject]);
+			button.setURL(config.url.guide.tutorial[subject][lang]);
 			button.setLabel(commandConfig.buttonLabel.tutorial[subject][lang]);
 			break;
 		}
