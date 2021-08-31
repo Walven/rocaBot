@@ -5,7 +5,7 @@ const { MessageActionRow, MessageButton } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 // Global config
-// const config = require('../config.json');
+const config = require('../config.json');
 
 // Local config
 const commandConfig = {
@@ -19,7 +19,7 @@ const commandConfig = {
 };
 
 module.exports = {
-	// Build slash command
+	// Command definition to be registered
 	data: new SlashCommandBuilder()
 		.setDefaultPermission(false)
 		.setName('admin')
@@ -29,6 +29,15 @@ module.exports = {
 				.setDescription('choose admin command')
 				.setRequired(true)
 				.addChoice('Send rule agreement prompt', 'sendRuleAgreementPrompt')),
+
+	// Command permissions
+	permissions: [
+		{
+			id: config.role.staff,
+			type: 'ROLE',
+			permission: true,
+		},
+	],
 
 	// Command action
 	async execute(interaction) {

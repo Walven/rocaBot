@@ -39,10 +39,15 @@ client.login(process.env.TOKEN);
 
 /**
  * Set command rights
+ * Slash command rights need to be set after the command has been registered
  * @param {Client} discordClient
  */
 async function setSlashCommandRights(discordClient) {
-	// Admin command
-	const adminCommand = await discordClient.guilds.cache.get(config.guild.id).commands.fetch('881982185308049408');
-	await adminCommand.permissions.add({ permissions: [{ id: config.role.staff, type: 'ROLE', permission: true }] });
+	const registeredCommands = await discordClient.guilds.cache.get(config.guild.id).commands.fetch();
+	for (const localCommand of discordClient.commands) {
+		if (localCommand.permissions) {
+			await registeredCommands.filter(registeredCommand => registeredCommand.name == localCommand.data.name).first()
+				.permissions.add({ permissions: localCommand.permissions });
+		}
+	}
 }
