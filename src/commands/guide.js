@@ -5,7 +5,7 @@ const { MessageActionRow, MessageButton } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 // Global config
-const config = require('../config.json');
+const config = require('../../config.json');
 
 // Local config
 const commandConfig = {

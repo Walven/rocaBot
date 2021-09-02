@@ -1,5 +1,5 @@
-require('dotenv').config();
-const config = require ('./config.json');
+require('dotenv').config({ path: '../.env' });
+const config = require ('../config.json');
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 
