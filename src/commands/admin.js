@@ -10,10 +10,10 @@ const config = require('../../config.json');
 // Local config
 const commandConfig = {
 	rules: {
-		buttonLabel: 'Agree',
+		buttonLabel: 'Agree ・ Accepter',
 		message: {
-			en: 'Same, but in english',
-			fr: 'Accédez au serveur Discord en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.',
+			en: 'Access the server by clicking the "Agree" button below. You then confirm that you have read the rules and accept them.',
+			fr: 'Accédez au serveur en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.',
 		},
 	},
 };
@@ -48,18 +48,18 @@ module.exports = {
 
 		switch (action) {
 		case 'sendRuleAgreementPrompt':
-			replySentence = commandConfig.rules.message.fr + '\n' + commandConfig.rules.message.en;
+			replySentence = commandConfig.rules.message.fr + '\n\n' + commandConfig.rules.message.en + '\n\u200b';
 			buttons.push(
 				new MessageButton()
-					.setCustomId('ruleAgreement')
+					.setCustomId('agreeToRules')
 					.setLabel(commandConfig.rules.buttonLabel)
-					.setStyle('PRIMARY'),
+					.setStyle('SUCCESS'),
 			);
 			break;
 		}
-
 		const row = new MessageActionRow()
 			.addComponents(buttons);
-		await interaction.reply({ content: replySentence, components: [row] });
+		interaction.guild.channels.cache.get(config.channel.rules).send({ content: replySentence, components: [row] });
+		await interaction.reply({ content: 'Message sent, check rules channel', ephemeral: true });
 	},
 };
