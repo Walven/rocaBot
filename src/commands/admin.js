@@ -47,15 +47,15 @@ module.exports = {
 		const buttons = [];
 
 		switch (action) {
-		case 'sendRuleAgreementPrompt':
-			replySentence = commandConfig.rules.message.fr + '\n\n' + commandConfig.rules.message.en + '\n\u200b';
-			buttons.push(
-				new MessageButton()
-					.setCustomId('agreeToRules')
-					.setLabel(commandConfig.rules.buttonLabel)
-					.setStyle('SUCCESS'),
-			);
-			break;
+			case 'sendRuleAgreementPrompt':
+				replySentence = commandConfig.rules.message.fr + '\n\n' + commandConfig.rules.message.en + '\n\u200b';
+				buttons.push(
+					new MessageButton()
+						.setCustomId('agreeToRules')
+						.setLabel(commandConfig.rules.buttonLabel)
+						.setStyle('SUCCESS'),
+				);
+				break;
 		}
 		const row = new MessageActionRow()
 			.addComponents(buttons);
