@@ -10,7 +10,7 @@ module.exports = {
 	id: 'getFrRole',
 	execute: (interaction) => {
 		// add 'fr' role
-		const memberRole = interaction.member.guild.roles.cache.find(role => role.id = config.role.fr);
+		const memberRole = interaction.member.guild.roles.cache.find(role => role.id = config.role.lang.fr);
 		interaction.member.roles.add(memberRole);
 
 		interaction.reply({ content: commandConfig.replySentence, ephemeral: true });
