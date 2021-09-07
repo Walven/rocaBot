@@ -16,6 +16,16 @@ const commandConfig = {
 			fr: 'Accédez au serveur en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.',
 		},
 	},
+	langPrompt: {
+		buttonLabel: {
+			en: 'English',
+			fr: 'Français',
+		},
+		message: {
+			en: 'What language do you speak?',
+			fr: 'Quelle langue parlez-vous ?',
+		},
+	},
 };
 
 module.exports = {
@@ -28,7 +38,10 @@ module.exports = {
 			option.setName('action')
 				.setDescription('choose admin command')
 				.setRequired(true)
-				.addChoice('Send rule agreement prompt', 'sendRuleAgreementPrompt')),
+				.addChoices([
+					['Send rule agreement prompt', 'sendRuleAgreementPrompt'],
+					['Send lang role prompt', 'sendLangRolePrompt'],
+				])),
 
 	// Command permissions
 	permissions: [
@@ -44,11 +57,17 @@ module.exports = {
 		const action = interaction.options.getString('action');
 
 		let replySentence;
+		let replyChannel;
 		const buttons = [];
 
+		// One case per command option
 		switch (action) {
+			/**
+			 * Sends the rule agreement message and button to the rules channel
+			 */
 			case 'sendRuleAgreementPrompt':
-				replySentence = commandConfig.rules.message.fr + '\n\n' + commandConfig.rules.message.en + '\n\u200b';
+				replySentence = commandConfig.rules.message.en + '\n\n' + commandConfig.rules.message.fr + '\n\u200b';
+				replyChannel = config.channel.rules;
 				buttons.push(
 					new MessageButton()
 						.setCustomId('agreeToRules')
@@ -56,10 +75,28 @@ module.exports = {
 						.setStyle('SUCCESS'),
 				);
 				break;
+
+			/**
+			 * Sends the lang roles message and buttons to the roles channel
+			 */
+			case 'sendLangRolePrompt':
+				replySentence = commandConfig.langPrompt.message.en + '\n\n' + commandConfig.langPrompt.message.fr + '\n\u200b';
+				replyChannel = config.channel.roles;
+				buttons.push(
+					new MessageButton()
+						.setCustomId('getEnRole')
+						.setLabel(commandConfig.langPrompt.buttonLabel.en)
+						.setStyle('PRIMARY'),
+					new MessageButton()
+						.setCustomId('getFrRole')
+						.setLabel(commandConfig.langPrompt.buttonLabel.fr)
+						.setStyle('PRIMARY'),
+				);
+				break;
 		}
 		const row = new MessageActionRow()
 			.addComponents(buttons);
-		interaction.guild.channels.cache.get(config.channel.rules).send({ content: replySentence, components: [row] });
+		interaction.guild.channels.cache.get(replyChannel).send({ content: replySentence, components: [row] });
 		await interaction.reply({ content: 'Message sent, check rules channel', ephemeral: true });
 	},
 };
