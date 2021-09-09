@@ -1,5 +1,4 @@
 require('dotenv').config({ path: '../.env' });
-const config = require ('../config.json');
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 
@@ -21,51 +20,16 @@ for (const file of buttonFiles) {
 	client.buttons.set(button.id, button);
 }
 
-client.once('ready', async () => {
-	console.log('My body is ready!');
-	setSlashCommandRights(client);
-});
-
-// Handle commands
-client.on('interactionCreate', async interaction => {
-
-	if (interaction.isCommand()) {
-		const command = client.commands.get(interaction.commandName);
-
-		try {
-			await command.execute(interaction);
-		}
-		catch (error) {
-			console.error(error);
-			return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
+// Event handling
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(client, ...args));
 	}
-	else if (interaction.isButton()) {
-		const button = client.buttons.get(interaction.customId);
-
-		try {
-			await button.execute(interaction);
-		}
-		catch (error) {
-			console.error(error);
-			return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
-	}
-});
-
-client.login(process.env.TOKEN);
-
-/**
- * Set command rights
- * Slash command rights need to be set after the command has been registered
- * @param {Client} discordClient
- */
-async function setSlashCommandRights(discordClient) {
-	const registeredCommands = await discordClient.guilds.cache.get(config.guild.id).commands.fetch();
-	for (const localCommand of discordClient.commands) {
-		if (localCommand.permissions) {
-			await registeredCommands.filter(registeredCommand => registeredCommand.name == localCommand.data.name).first()
-				.permissions.add({ permissions: localCommand.permissions });
-		}
+	else {
+		client.on(event.name, (...args) => event.execute(client, ...args));
 	}
 }
+
+client.login(process.env.TOKEN);
