@@ -33,10 +33,10 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setDefaultPermission(false)
 		.setName('admin')
-		.setDescription('Staff restricted command')
+		.setDescription('Staff restricted commands')
 		.addStringOption(option =>
 			option.setName('action')
-				.setDescription('Select command')
+				.setDescription('Command to execute')
 				.setRequired(true)
 				.addChoices([
 					['Send rule agreement prompt', 'sendRuleAgreementPrompt'],

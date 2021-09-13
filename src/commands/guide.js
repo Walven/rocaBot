@@ -105,13 +105,13 @@ module.exports = {
 			subcommand
 				.setName('data')
 				.setDescription('Get links to the data lists')
-				.addStringOption(option => option.setName('type').setDescription('Select data type').setRequired(true).addChoices([
+				.addStringOption(option => option.setName('type').setDescription('Data type').setRequired(true).addChoices([
 					['Pokémon', 'pokemon'],
 					['Abilities', 'abilities'],
 					['Items', 'items'],
 					['Moves', 'moves'],
 				]))
-				.addStringOption(option => option.setName('lang').setDescription('Answer language').setRequired(false).addChoices([['fr', 'fr'], ['en', 'en']])))
+				.addStringOption(option => option.setName('lang').setDescription('Reply language').setRequired(false).addChoices([['fr', 'fr'], ['en', 'en']])))
 
 		// Subcommand to get access to the tutorials
 		.addSubcommand(subcommand =>
@@ -151,7 +151,7 @@ module.exports = {
 				button.setURL(config.url.guide.data[dataType]);
 				button.setLabel(commandConfig.buttonLabel.data[dataType][lang]);
 				break;
-				
+
 			case 'tutorial':
 				replySentence = commandConfig.replySentence.tutorial[subject][lang];
 				button.setURL(config.url.guide.tutorial[subject][lang]);

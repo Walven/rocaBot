@@ -26,7 +26,7 @@ module.exports = {
 		.setDescription('Get link to the support website')
 		.addStringOption(option =>
 			option.setName('lang')
-				.setDescription('Select reply language')
+				.setDescription('Reply language')
 				.setRequired(false)
 				.addChoice('fr', 'fr')
 				.addChoice('en', 'en')),
