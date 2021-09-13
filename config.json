@@ -21,6 +21,9 @@
     "staff": "773700444857434113",
     "member": "260057729794572288"
   },
+  "ui": {
+    "divider": "══════════════════"
+  },
   "url": {
     "documentation": "https://psdk.pokemonworkshop.com/yard/",
     "guide": {

@@ -14,10 +14,9 @@ module.exports = {
 		+ 'You\'ll also be able to discuss about the software and meet a whole community made out of Pokémon and creation fans!\n\n'
 		+ `▶️ To access the rest of the server and the role selection, read the ${channelMention(config.channel.rules)} , click the button and you'll be ready to go! ◀️`;
 
-		const separator = '❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧✿❁✧';
-
-		const finalMessage = messageFr + '\n\n' + separator + '\n\n' + messageEn;
+		const finalMessage = messageEn + '\n\n' + config.ui.divider + '\n\n' + messageFr;
 		const welcomeChannel = member.guild.channels.cache.find(channel => channel.id === config.channel.welcome);
+		
 		welcomeChannel.send({ content: finalMessage });
 	},
 };
