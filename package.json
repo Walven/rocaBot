@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js"
   },
+  "engines": {
+    "node": "16.6"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Walven/rocaBot.git"
