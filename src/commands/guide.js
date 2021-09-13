@@ -91,39 +91,39 @@ module.exports = {
 	// Build slash command
 	data: new SlashCommandBuilder()
 		.setName('guide')
-		.setDescription('Get link to the guides')
+		.setDescription('Get link to the different guides')
 
 		// Subcommand to get access to the index of all guides
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('index')
-				.setDescription('Guide index')
-				.addStringOption(option => option.setName('lang').setDescription('guide language').setRequired(true).addChoices([['fr', 'fr'], ['en', 'en']])))
+				.setDescription('All the guides')
+				.addStringOption(option => option.setName('lang').setDescription('Guides language').setRequired(false).addChoices([['fr', 'fr'], ['en', 'en']])))
 
 		// Subcommand to get acccess to the different data types
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('data')
-				.setDescription('See data types')
-				.addStringOption(option => option.setName('type').setDescription('data type').setRequired(true).addChoices([
+				.setDescription('Get links to the data lists')
+				.addStringOption(option => option.setName('type').setDescription('Select data type').setRequired(true).addChoices([
 					['Pokémon', 'pokemon'],
 					['Abilities', 'abilities'],
 					['Items', 'items'],
 					['Moves', 'moves'],
 				]))
-				.addStringOption(option => option.setName('lang').setDescription('answer language').setRequired(true).addChoices([['fr', 'fr'], ['en', 'en']])))
+				.addStringOption(option => option.setName('lang').setDescription('Answer language').setRequired(false).addChoices([['fr', 'fr'], ['en', 'en']])))
 
 		// Subcommand to get access to the tutorials
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('tutorial')
-				.setDescription('Get links to tutorials')
-				.addStringOption(option => option.setName('subject').setDescription('tutorial subject').setRequired(true).addChoices([
+				.setDescription('Get links to the tutorials')
+				.addStringOption(option => option.setName('subject').setDescription('Tutorials subject').setRequired(true).addChoices([
 					['Event', 'event'],
 					['RubyHost', 'rubyhost'],
 					['Tiled', 'tiled'],
 				]))
-				.addStringOption(option => option.setName('lang').setDescription('answer language').setRequired(true).addChoices([['fr', 'fr'], ['en', 'en']]))),
+				.addStringOption(option => option.setName('lang').setDescription('Tutorial language').setRequired(false).addChoices([['fr', 'fr'], ['en', 'en']]))),
 
 
 	// Command action
@@ -140,22 +140,22 @@ module.exports = {
 		let replySentence;
 
 		switch (subcommand) {
-		case 'index':
-			replySentence = commandConfig.replySentence.index[lang];
-			button.setURL(config.url.guide.index[lang]);
-			button.setLabel(commandConfig.buttonLabel.index[lang]);
-			break;
+			case 'index':
+				replySentence = commandConfig.replySentence.index[lang];
+				button.setURL(config.url.guide.index[lang]);
+				button.setLabel(commandConfig.buttonLabel.index[lang]);
+				break;
 
-		case 'data':
-			replySentence = commandConfig.replySentence.data[dataType][lang];
-			button.setURL(config.url.guide.data[dataType]);
-			button.setLabel(commandConfig.buttonLabel.data[dataType][lang]);
-			break;
-		case 'tutorial':
-			replySentence = commandConfig.replySentence.tutorial[subject][lang];
-			button.setURL(config.url.guide.tutorial[subject][lang]);
-			button.setLabel(commandConfig.buttonLabel.tutorial[subject][lang]);
-			break;
+			case 'data':
+				replySentence = commandConfig.replySentence.data[dataType][lang];
+				button.setURL(config.url.guide.data[dataType]);
+				button.setLabel(commandConfig.buttonLabel.data[dataType][lang]);
+				break;
+			case 'tutorial':
+				replySentence = commandConfig.replySentence.tutorial[subject][lang];
+				button.setURL(config.url.guide.tutorial[subject][lang]);
+				button.setLabel(commandConfig.buttonLabel.tutorial[subject][lang]);
+				break;
 		}
 
 		const row = new MessageActionRow()
