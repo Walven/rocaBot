@@ -18,8 +18,8 @@
       "en": "259443170708815872",
       "fr": "259443073107492876"
     },
-    "staff": "773700444857434113",
-    "member": "260057729794572288"
+    "member": "260057729794572288",
+    "staff": "773700444857434113" 
   },
   "ui": {
     "divider": "══════════════════"
@@ -51,6 +51,7 @@
           "fr": "https://psdk.pokemonworkshop.fr/wiki/fr/tiled/index.html"
         }
       }
-    }
+    },
+    "support": "https://q2a.pokemonsdk.com/"
   }
 }
