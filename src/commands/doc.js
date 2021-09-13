@@ -33,24 +33,15 @@ module.exports = {
 
 	// Command action
 	async execute(interaction) {
-		const lang = interaction.options.getString('lang');
-		let replySentence;
-
-		const messageButton = new MessageButton()
-			.setStyle('LINK')
-			.setURL(config.url.documentation);
-		
-		// Set english as default if language is not specified
-		if (lang) {
-			messageButton.setLabel(commandConfig.buttonLabel[lang]);
-			replySentence = commandConfig.replySentence[lang];
-		} else {
-			messageButton.setLabel(commandConfig.buttonLabel.en);
-			replySentence = commandConfig.replySentence.en;
-		}
+		const lang = interaction.options.getString('lang') || 'en';
 
 		const row = new MessageActionRow()
-			.addComponents(messageButton);
-		await interaction.reply({ content: replySentence, components: [row] });
+			.addComponents(
+				new MessageButton()
+					.setStyle('LINK')
+					.setURL(config.url.documentation)
+					.setLabel(commandConfig.buttonLabel[lang]),
+			);
+		await interaction.reply({ content: commandConfig.replySentence[lang], components: [row] });
 	},
 };
