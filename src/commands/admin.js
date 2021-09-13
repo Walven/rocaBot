@@ -12,8 +12,8 @@ const commandConfig = {
 	rules: {
 		buttonLabel: 'Agree ・ Accepter',
 		message: {
-			en: 'Access the server by clicking the "Agree" button below. You then confirm that you have read the rules and accept them.',
-			fr: 'Accédez au serveur en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.',
+			en: `${config.customEmoji.ballEn}  Access the server by clicking the "Agree" button below. You then confirm that you have read the rules and accept them.`,
+			fr: `${config.customEmoji.ballFr}  Accédez au serveur en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.`,
 		},
 	},
 	langPrompt: {
@@ -22,8 +22,8 @@ const commandConfig = {
 			fr: 'Français',
 		},
 		message: {
-			en: 'What language do you speak?',
-			fr: 'Quelle langue parlez-vous ?',
+			en: `${config.customEmoji.ballEn}  What language do you speak?`,
+			fr: `${config.customEmoji.ballFr}  Quelle langue parlez-vous ?`,
 		},
 	},
 };
@@ -33,10 +33,10 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setDefaultPermission(false)
 		.setName('admin')
-		.setDescription('Admin commands')
+		.setDescription('Staff restricted command')
 		.addStringOption(option =>
 			option.setName('action')
-				.setDescription('choose admin command')
+				.setDescription('Select command')
 				.setRequired(true)
 				.addChoices([
 					['Send rule agreement prompt', 'sendRuleAgreementPrompt'],
@@ -97,6 +97,6 @@ module.exports = {
 		const row = new MessageActionRow()
 			.addComponents(buttons);
 		interaction.guild.channels.cache.get(replyChannel).send({ content: replySentence, components: [row] });
-		await interaction.reply({ content: 'Message sent, check rules channel', ephemeral: true });
+		await interaction.reply({ content: 'Message sent!', ephemeral: true });
 	},
 };
