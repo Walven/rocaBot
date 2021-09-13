@@ -130,15 +130,15 @@ module.exports = {
 	async execute(interaction) {
 
 		// Get subcommand and option values
-		const lang = interaction.options.getString('lang');
+		const lang = interaction.options.getString('lang') || 'en';
 		const dataType = interaction.options.getString('type');
 		const subject = interaction.options.getString('subject');
 		const subcommand = interaction.options.getSubcommand();
 
+		let replySentence;
 		const button = new MessageButton()
 			.setStyle('LINK');
-		let replySentence;
-
+		
 		switch (subcommand) {
 			case 'index':
 				replySentence = commandConfig.replySentence.index[lang];
@@ -151,6 +151,7 @@ module.exports = {
 				button.setURL(config.url.guide.data[dataType]);
 				button.setLabel(commandConfig.buttonLabel.data[dataType][lang]);
 				break;
+				
 			case 'tutorial':
 				replySentence = commandConfig.replySentence.tutorial[subject][lang];
 				button.setURL(config.url.guide.tutorial[subject][lang]);
