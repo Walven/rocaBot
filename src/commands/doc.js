@@ -10,8 +10,8 @@ const config = require('../../config.json');
 // Local config
 const commandConfig = {
 	replySentence: {
-		en: 'Here\'s the link to the documentation',
-		fr: 'Voici le lien vers la documentation',
+		en: 'Here\'s the link to the developer documentation',
+		fr: 'Voici le lien vers la documentation développeur',
 	},
 	buttonLabel: {
 		en: 'Access the documentation',
@@ -23,10 +23,10 @@ module.exports = {
 	// Build slash command
 	data: new SlashCommandBuilder()
 		.setName('doc')
-		.setDescription('Get link to the documentation')
+		.setDescription('Get link to the developer documentation')
 		.addStringOption(option =>
 			option.setName('lang')
-				.setDescription('Choose reply language')
+				.setDescription('Select reply language')
 				.setRequired(false)
 				.addChoice('fr', 'fr')
 				.addChoice('en', 'en')),
