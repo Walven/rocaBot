@@ -1,7 +1,8 @@
-# RocaBot
-A discord bot that is also a very good boi
+# rocaBot
+A Discord bot that is also a very good boi! 
+Made for the Pokémon Workshop Discord server.
 
-# Setup
-## Environment variables:
-- TOKEN: Your discord bot user token
-- CLIENT_ID: Your discord OAuth2 public id
+## Setup
+### Environment variables:
+- TOKEN: The Discord bot user token
+- CLIENT_ID: The Discord OAuth2 public id
