@@ -1,7 +1,7 @@
 /**
  * Sends welcome channels messages
  */
-const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
+const { MessageActionRow, MessageButton} = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 // Global config
