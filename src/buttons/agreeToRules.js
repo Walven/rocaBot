@@ -5,7 +5,11 @@ const { MessageActionRow, MessageButton } = require('discord.js');
 const config = require ('../../config.json');
 const commandConfig = {
 	replySentence: {
-		langPrompt: 'What language do you speak? \n\nQuelle langue parlez-vous ?\n\u200b',
+		// langPrompt: 'What language do you speak? \n\nQuelle langue parlez-vous ?\n\u200b',
+		langPrompt: {
+			en: `${config.customEmoji.ballEn} \u200b What language do you speak?`,
+			fr: `${config.customEmoji.ballFr} \u200b Quelle langue parlez-vous ?`,
+		},
 		langAlreadySet: {
 			fr: 'Vous avez déjà accepté les règles, profitez du serveur !',
 			en: 'You already accepted the rules, enjoy the server!',
@@ -40,6 +44,12 @@ module.exports = {
 		const memberRole = interaction.member.guild.roles.cache.find(role => role.id = config.role.member);
 		interaction.member.roles.add(memberRole);
 
+		replyEmbed = {
+			color: 0x586aea,
+			title: commandConfig.replySentence.langPrompt.en,
+			description: commandConfig.replySentence.langPrompt.fr,
+		};
+
 		const row = new MessageActionRow()
 			.addComponents(
 				[
@@ -53,6 +63,6 @@ module.exports = {
 						.setLabel(commandConfig.button.label.fr),
 				],
 			);
-		interaction.reply({ content: commandConfig.replySentence.langPrompt, ephemeral: true, components: [row] });
+		interaction.reply({ embeds: [replyEmbed], ephemeral: true, components: [row] });
 	},
 };
