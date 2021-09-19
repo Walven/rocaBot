@@ -1,7 +1,7 @@
 /**
  * Sends welcome channels messages
  */
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 // Global config
@@ -12,8 +12,8 @@ const commandConfig = {
 	rules: {
 		buttonLabel: 'Agree ・ Accepter',
 		message: {
-			en: `${config.customEmoji.ballEn}  Access the server by clicking the "Agree" button below. You then confirm that you have read the rules and accept them.`,
-			fr: `${config.customEmoji.ballFr}  Accédez au serveur en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.`,
+			en: `${config.customEmoji.ballEn} \u200b Access the server by clicking the "Agree" button below. You then confirm that you have read the rules and accept them.`,
+			fr: `${config.customEmoji.ballFr} \u200b Accédez au serveur en cliquant sur le bouton "Accepter" ci-dessous. Vous affirmez alors avoir pris connaissance des règles et les accepter.`,
 		},
 	},
 	langPrompt: {
@@ -22,8 +22,8 @@ const commandConfig = {
 			fr: 'Français',
 		},
 		message: {
-			en: `${config.customEmoji.ballEn}  What language do you speak?`,
-			fr: `${config.customEmoji.ballFr}  Quelle langue parlez-vous ?`,
+			en: `${config.customEmoji.ballEn} \u200b What language do you speak?`,
+			fr: `${config.customEmoji.ballFr} \u200b Quelle langue parlez-vous ?`,
 		},
 	},
 };
@@ -58,6 +58,7 @@ module.exports = {
 
 		let replySentence;
 		let replyChannel;
+		let replyEmbed;
 		const buttons = [];
 
 		// One case per command option
@@ -74,14 +75,29 @@ module.exports = {
 						.setLabel(commandConfig.rules.buttonLabel)
 						.setStyle('SUCCESS'),
 				);
+
+				replyEmbed = {
+					color: 0x5aa264,
+					title: commandConfig.rules.message.en,
+					description: commandConfig.rules.message.fr,
+					
+				};
+
 				break;
 
 			/**
 			 * Sends the lang roles message and buttons to the roles channel
 			 */
 			case 'sendLangRolePrompt':
-				replySentence = commandConfig.langPrompt.message.en + '\n\n' + commandConfig.langPrompt.message.fr + '\n\u200b';
+				//replySentence = commandConfig.langPrompt.message.en + '\n\n' + commandConfig.langPrompt.message.fr + '\n\u200b';
 				replyChannel = config.channel.roles;
+
+				replyEmbed = {
+					color: 0x586aea,
+					title: commandConfig.langPrompt.message.en,
+					description: commandConfig.langPrompt.message.fr,
+				};
+
 				buttons.push(
 					new MessageButton()
 						.setCustomId('getEnRole')
@@ -92,11 +108,14 @@ module.exports = {
 						.setLabel(commandConfig.langPrompt.buttonLabel.fr)
 						.setStyle('PRIMARY'),
 				);
+
 				break;
 		}
+
 		const row = new MessageActionRow()
-			.addComponents(buttons);
-		interaction.guild.channels.cache.get(replyChannel).send({ content: replySentence, components: [row] });
+					.addComponents(buttons);
+		interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed], components: [row] });
 		await interaction.reply({ content: 'Message sent!', ephemeral: true });
+		
 	},
 };
