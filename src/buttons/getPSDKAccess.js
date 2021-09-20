@@ -1,11 +1,12 @@
 /**
- * Gives the 'fr' role
+ * Gives the 'SDK' role
  */
+const { channelMention } = require('@discordjs/builders');
 const config = require ('../../config.json');
 const commandConfig = {
 	replySentence: {
-		en: `${config.customEmoji.ballEn} \u200b You now have access to the Pokémon SDK download!`,
-		fr: `${config.customEmoji.ballFr} \u200b Vous avez maintenant accès au téléchargement de Pokémon SDK !`
+		en: `${config.customEmoji.ballEn} \u200b You now have access to the Pokémon SDK download! \n\nCheck ${channelMention(config.channel.psdkLinks)}.`,
+		fr: `${config.customEmoji.ballFr} \u200b Vous avez maintenant accès au téléchargement de Pokémon SDK ! \n\nRendez vous dans ${channelMention(config.channel.psdkLinks)}.`
 	},
 };
 
