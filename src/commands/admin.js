@@ -26,6 +26,13 @@ const commandConfig = {
 			fr: `${config.customEmoji.ballFr} \u200b Quelle langue parlez-vous ?`,
 		},
 	},
+	psdkAccess: {
+		buttonLabel: 'Access to Pokémon SDK download ・ Accéder au téléchargement de Pokémon SDK',
+		message: {
+			en: `${config.customEmoji.ballEn} \u200b Access the Pokémon SDK download by clicking the "Access" button below.`,
+			fr: `${config.customEmoji.ballFr} \u200b Accédez au téléchargement de Pokémon SDK en cliquant sur le bouton "Accéder" ci-dessous.`,
+		},
+	},
 };
 
 module.exports = {
@@ -41,6 +48,7 @@ module.exports = {
 				.addChoices([
 					['Send rule agreement prompt', 'sendRuleAgreementPrompt'],
 					['Send lang role prompt', 'sendLangRolePrompt'],
+					['Send PSDK access prompt', 'sendPSDKAccessPrompt'],
 				])),
 
 	// Command permissions
@@ -67,7 +75,6 @@ module.exports = {
 			 * Sends the rule agreement message and button to the rules channel
 			 */
 			case 'sendRuleAgreementPrompt':
-				replySentence = commandConfig.rules.message.en + '\n\n' + commandConfig.rules.message.fr + '\n\u200b';
 				replyChannel = config.channel.rules;
 				buttons.push(
 					new MessageButton()
@@ -80,7 +87,6 @@ module.exports = {
 					color: 0x5aa264,
 					title: commandConfig.rules.message.en,
 					description: commandConfig.rules.message.fr,
-					
 				};
 
 				break;
@@ -89,7 +95,6 @@ module.exports = {
 			 * Sends the lang roles message and buttons to the roles channel
 			 */
 			case 'sendLangRolePrompt':
-				//replySentence = commandConfig.langPrompt.message.en + '\n\n' + commandConfig.langPrompt.message.fr + '\n\u200b';
 				replyChannel = config.channel.roles;
 
 				replyEmbed = {
@@ -108,6 +113,26 @@ module.exports = {
 						.setLabel(commandConfig.langPrompt.buttonLabel.fr)
 						.setStyle('PRIMARY'),
 				);
+
+				break;
+
+			/**
+			 * Sends the PSDK access message
+			 */
+			case 'sendPSDKAccessPrompt':
+				replyChannel = config.channel.psdkAccess;
+				buttons.push(
+					new MessageButton()
+						.setCustomId('getPSDKAccess')
+						.setLabel(commandConfig.psdkAccess.buttonLabel)
+						.setStyle('PRIMARY'),
+				);
+
+				replyEmbed = {
+					color: 0x586aea,
+					title: commandConfig.psdkAccess.message.en,
+					description: commandConfig.psdkAccess.message.fr,
+				};
 
 				break;
 		}
