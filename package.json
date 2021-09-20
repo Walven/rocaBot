@@ -1,16 +1,34 @@
 {
-    "name": "rocaBot",
-    "version": "0.0.2",
-    "description": "Pokemon Workshop Bot",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js"
-    },
-    "author": "Walven",
-    "license": "ISC",
-    "dependencies": {
-        "discord.js": "^12.4.1",
-        "eslint": "^7.14.0",
-        "nodemon": "^1.19.4"
-    }
+  "name": "rocabot",
+  "version": "1.0.0",
+  "description": "A very good boi.",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
+  },
+  "engines": {
+    "node": "16.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Walven/rocaBot.git"
+  },
+  "author": "Pokémon Workshop",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Walven/rocaBot/issues"
+  },
+  "homepage": "https://github.com/Walven/rocaBot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.22.0",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "ts-node": "^10.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
 }
