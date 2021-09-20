@@ -11,8 +11,8 @@ const commandConfig = {
 			fr: `${config.customEmoji.ballFr} \u200b Quelle langue parlez-vous ?`,
 		},
 		langAlreadySet: {
-			fr: 'Vous avez déjà accepté les règles, profitez du serveur !',
-			en: 'You already accepted the rules, enjoy the server!',
+			fr: 'Bienvenue, profitez du serveur !',
+			en: 'Welcome, enjoy the server!',
 		},
 	},
 	button: {
@@ -31,6 +31,10 @@ module.exports = {
 			return Object.values(langRoles).includes(role.id);
 		});
 
+		// add 'member' role
+		const memberRole = interaction.member.guild.roles.cache.find(role => role.id = config.role.member);
+		interaction.member.roles.add(memberRole);
+
 		// If lang role already set, do not ask for lang again
 		if (memberLangRoles.size) {
 			memberLangRoles.find(role => role.id === config.role.lang.en) ?
@@ -39,10 +43,6 @@ module.exports = {
 				interaction.reply({ content: commandConfig.replySentence.langAlreadySet.fr, ephemeral: true });
 			return;
 		}
-
-		// add 'member' role
-		const memberRole = interaction.member.guild.roles.cache.find(role => role.id = config.role.member);
-		interaction.member.roles.add(memberRole);
 
 		replyEmbed = {
 			color: 0x586aea,
