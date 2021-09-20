@@ -24,7 +24,7 @@ const commandConfig = {
 			abilities: {
 				title: {
 					en: '🔗  Abilities: database index',
-					fr: '🔗  Talents : index de donnés',
+					fr: '🔗  Talents : index de données',
 				},
 				description: {
 					en: 'Browse the abilities database index.',
