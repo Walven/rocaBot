@@ -9,42 +9,90 @@ const config = require('../../config.json');
 
 // Local config
 const commandConfig = {
-	replySentence: {
+	embed: {
 		index: {
-			en: 'Here\'s the index of all guides',
-			fr: 'Voici le lien vers les guides',
+			title: {
+				en: '🔗  Index of all guides',
+				fr: '🔗  Index de tous les guides',
+			},
+			description: {
+				en: 'Browse all the guides on fangame making.',
+				fr: 'Parcourez l\'ensemble des guides sur le fangame making.',
+			}
 		},
 		data: {
-			pokemon: {
-				en: 'Here\'s the link to the Pokémon data list',
-				fr: 'Voici le lien vers la liste des données des Pokémon',
-			},
 			abilities: {
-				en: 'Here\'s the link to the abilities data list',
-				fr: 'Voici le lien vers la liste des données des talents',
+				title: {
+					en: '🔗  Abilities: database index',
+					fr: '🔗  Talents : index de donnés',
+				},
+				description: {
+					en: 'Browse the abilities database index.',
+					fr: 'Parcourez l\'index de données des talents.',
+				}
 			},
 			items: {
-				en: 'Here\'s the link to the items data list',
-				fr: 'Voici le lien vers la liste des données des objets',
+				title: {
+					en: '🔗  Items: database index',
+					fr: '🔗  Objets : index de données',
+				},
+				description: {
+					en: 'Browse the items database index.',
+					fr: 'Parcourez l\'index de données des objets.',
+				}	
 			},
 			moves: {
-				en: 'Here\'s the link to the moves data list',
-				fr: 'Voici le lien vers la liste des données des attaques',
+				title: {
+					en: '🔗  Moves: databases index',
+					fr: '🔗  Attaques : index de données',
+				},
+				description: {
+					en: 'Browse the moves database index.',
+					fr: 'Parcourez l\'index de données des attaques.',
+				}
+			},
+			pokemon: {
+				title: {
+					en: '🔗  Pokémon: database index',
+					fr: '🔗  Pokémon : index de données',
+				},
+				description: {
+					en: 'Browse the Pokémon database index.',
+					fr: 'Parcourez l\'index de données des Pokémon.',
+				}
 			},
 		},
 		tutorial: {
 			event: {
-				en: 'Here\'s the link to the event making tutorials',
-				fr: 'Voici le lien vers les tutoriels d\'event making',
+				title: {
+					en: '🔗  Tutorials: Event Making',
+					fr: '🔗  Tutoriels : Event Making',
+				},
+				description: {
+					en: 'Learn how to create events with Pokémon SDK.',
+					fr: 'Apprenez comment créer des événements avec Pokémon SDK.',
+				}
 			},
 			rubyhost: {
-				en: 'Here\'s the link to the RubyHost tutorials',
-				fr: 'Voici le lien vers les tutoriels RubyHost',
+				title: {
+					en: '🔗  Tutorials: Ruby Host',
+					fr: '🔗  Tutoriels : Ruby Host',
+				},
+				description: {
+					en: 'Learn how to edit your game data with Ruby Host.',
+					fr: 'Apprenez à modifier les données de votre jeu avec Ruby Host.',
+				}
 			},
 			tiled: {
-				en: 'Here\'s the link to the Tiled tutorials',
-				fr: 'Voici le lien vers les tutoriels Tiled',
-			},
+				title: {
+					en: '🔗  Tutorials: Tiled',
+					fr: '🔗  Tutoriels : Tiled',
+				},
+				description: {
+					en: 'Learn how to make maps with Tiled. ',
+					fr: 'Apprenez à créer des maps avec Tiled. ',
+				}
+			}
 		},
 	},
 	buttonLabel: {
@@ -104,7 +152,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('data')
-				.setDescription('Get links to the data lists')
+				.setDescription('Get links to the data indexes')
 				.addStringOption(option => option.setName('type').setDescription('Data type').setRequired(true).addChoices([
 					['Pokémon', 'pokemon'],
 					['Abilities', 'abilities'],
@@ -135,25 +183,42 @@ module.exports = {
 		const subject = interaction.options.getString('subject');
 		const subcommand = interaction.options.getSubcommand();
 
-		let replySentence;
+		let replyEmbed;
+
 		const button = new MessageButton()
 			.setStyle('LINK');
 		
 		switch (subcommand) {
 			case 'index':
-				replySentence = commandConfig.replySentence.index[lang];
+				replyEmbed = {
+					color: 0x50545b,
+					title: commandConfig.embed.index.title[lang],
+					description: commandConfig.embed.index.description[lang],
+				};
+
+
 				button.setURL(config.url.guide.index[lang]);
 				button.setLabel(commandConfig.buttonLabel.index[lang]);
 				break;
 
 			case 'data':
-				replySentence = commandConfig.replySentence.data[dataType][lang];
+				replyEmbed = {
+					color: 0x50545b,
+					title: commandConfig.embed.data[dataType].title[lang],
+					description: commandConfig.embed.data[dataType].description[lang],
+				};
+
 				button.setURL(config.url.guide.data[dataType]);
 				button.setLabel(commandConfig.buttonLabel.data[dataType][lang]);
 				break;
 
 			case 'tutorial':
-				replySentence = commandConfig.replySentence.tutorial[subject][lang];
+				replyEmbed = {
+					color: 0x50545b,
+					title: commandConfig.embed.tutorial[subject].title[lang],
+					description: commandConfig.embed.tutorial[subject].description[lang],
+				};
+
 				button.setURL(config.url.guide.tutorial[subject][lang]);
 				button.setLabel(commandConfig.buttonLabel.tutorial[subject][lang]);
 				break;
@@ -162,6 +227,6 @@ module.exports = {
 		const row = new MessageActionRow()
 			.addComponents(button);
 
-		await interaction.reply({ content: replySentence, components: [row] });
+		await interaction.reply({ embeds: [replyEmbed], components: [row] });
 	},
 };

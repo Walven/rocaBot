@@ -9,9 +9,15 @@ const config = require('../../config.json');
 
 // Local config
 const commandConfig = {
-	replySentence: {
-		en: 'To request help, please use our support website. (Remember to check if somemone else has already had the same problem!)',
-		fr: 'Pour demander de l\'aide, merci d\'utiliser notre site de support. (Pensez à d\'abord rechercher si quelqu\'un n\'a pas déjà eu le même problème !)',
+	embed: {
+		title: {
+			en: '❓  To request help, please use our support website.',
+			fr: '❓  Pour demander de l\'aide, merci d\'utiliser notre site de support.',
+		},
+		description: {
+			en: '(Remember to check if somemone else has already had the same problem!)',
+			fr: '(Pensez à d\'abord rechercher si quelqu\'un n\'a pas déjà eu le même problème !)',
+		}
 	},
 	buttonLabel: {
 		en: 'Access the support',
@@ -35,6 +41,12 @@ module.exports = {
 	async execute(interaction) {
 		const lang = interaction.options.getString('lang') || 'en';
 
+		let replyEmbed = {
+			color: 0x50545b,
+			title: commandConfig.embed.title[lang],
+			description: commandConfig.embed.description[lang],
+		};
+
 		const row = new MessageActionRow()
 			.addComponents(
 				new MessageButton()
@@ -42,6 +54,7 @@ module.exports = {
 					.setURL(config.url.support)
 					.setLabel(commandConfig.buttonLabel[lang]),
 			);
-		await interaction.reply({ content: commandConfig.replySentence[lang], components: [row] });
+
+		await interaction.reply({ embeds: [replyEmbed], components: [row] });
 	},
 };
