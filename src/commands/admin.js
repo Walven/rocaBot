@@ -33,6 +33,13 @@ const commandConfig = {
 			fr: `${config.customEmoji.ballFr} \u200b Accédez au téléchargement de Pokémon SDK en cliquant sur le bouton "Accéder" ci-dessous.`,
 		},
 	},
+	eventPrompt: {
+		buttonLabel: 'I want to participate ・ Je veux participer',
+		message: {
+			en: `${config.customEmoji.ballEn} \u200b Participate in the Fall Guys eventby clicking the "Access" button below.`,
+			fr: `${config.customEmoji.ballFr} \u200b Participer à l'événement Fall Guys en cliquant sur le bouton "Accéder" ci-dessous.`,
+		},
+	}
 };
 
 module.exports = {
@@ -49,6 +56,7 @@ module.exports = {
 					['Send rule agreement prompt', 'sendRuleAgreementPrompt'],
 					['Send lang role prompt', 'sendLangRolePrompt'],
 					['Send PSDK access prompt', 'sendPSDKAccessPrompt'],
+					['Send Event prompt', 'sendEventPrompt'],
 				])),
 
 	// Command permissions
@@ -133,6 +141,27 @@ module.exports = {
 					title: commandConfig.psdkAccess.message.en,
 					description: commandConfig.psdkAccess.message.fr,
 				};
+
+				break;
+			
+			/**
+			 * Sends the lang roles message and buttons to the roles channel
+			 */
+			case 'sendEventPrompt':
+				replyChannel = config.channel.roles;
+
+				replyEmbed = {
+					color: 0x586aea,
+					title: commandConfig.eventPrompt.message.en,
+					description: commandConfig.eventPrompt.message.fr,
+				};
+
+				buttons.push(
+					new MessageButton()
+						.setCustomId('getEventRole')
+						.setLabel(commandConfig.eventPrompt.buttonLabel)
+						.setStyle('PRIMARY'),
+				);
 
 				break;
 		}
