@@ -56,7 +56,7 @@ module.exports = {
 					['Send rule agreement prompt', 'sendRuleAgreementPrompt'],
 					['Send lang role prompt', 'sendLangRolePrompt'],
 					['Send PSDK access prompt', 'sendPSDKAccessPrompt'],
-					['Send Event prompt', 'sendPSDKAccessPrompt'],
+					['Send Event prompt', 'sendEventPrompt'],
 				])),
 
 	// Command permissions
@@ -148,7 +148,7 @@ module.exports = {
 			 * Sends the lang roles message and buttons to the roles channel
 			 */
 			case 'sendEventPrompt':
-				replyChannel = config.channel.bot;
+				replyChannel = config.channel.roles;
 
 				replyEmbed = {
 					color: 0x586aea,
