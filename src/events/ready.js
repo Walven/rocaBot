@@ -1,11 +1,11 @@
-const config = require (__dirname + '/../../config.json');
+// const config = require (__dirname + '/../../config.json');
 
 module.exports = {
 	name: 'ready',
 	once: true,
 	execute: (client) => {
 		console.log('My body is ready!');
-		setSlashCommandRights(client);
+		// setSlashCommandRights(client);
 	},
 };
 
@@ -13,7 +13,7 @@ module.exports = {
  * Set command rights
  * Slash command rights need to be set after the command has been registered
  * @param {Client} discordClient
- */
+
 async function setSlashCommandRights(discordClient) {
 	const registeredCommands = await discordClient.guilds.cache.get(config.guild.id).commands.fetch();
 	for (const localCommand of discordClient.commands) {
@@ -23,3 +23,4 @@ async function setSlashCommandRights(discordClient) {
 		}
 	}
 }
+*/
