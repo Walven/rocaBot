@@ -178,29 +178,40 @@ module.exports = {
 					description: 'yay',
 				};
 				
-				//Init repo
+				//Clone Repo
 				simpleGit()
 					.clone('https://github.com/Walven/rocaBot.git')
-					.then(() => console.log('finished'))
-					.catch((err) => console.error('failed: ', err));
-				
-				console.log('inited repo')
-				//Extract args from message
-				let newUrlToAdd = 'twitch.it';
-				
-				//Write to whitelist
-				fs.writeFileSync(__dirname + '/../events/message/url_whitelist.txt', newUrlToAdd, 'utf8');
-				console.log('wrote to file');
+					.then(() => {
+						simpleGit(__dirname + '/../../rocaBot')
+							//REMOVE THIS BEFORE PROD
+							.checkout('origin/messageFilter')
+							.then(() => { 
+								console.log('checked out messageFilter')
+								
+								console.log('Cloned')
+								//Extract args from message
+								let newUrlToAdd = 'twitch.it';
+							
+								//Write to whitelist
+								fs.mkdirSync(__dirname + '/../../rocaBot/src/events/message', {recursive: true}, )
+								fs.appendFile(__dirname + '/../../rocaBot/src/events/message/url_whitelist.txt', newUrlToAdd, { flag: 'a+' }, err => {console.log(err)});
+								console.log('wrote to filedd');
+		
+								//Commit & push
+								simpleGit(__dirname + '/../../rocaBot')
+									.addConfig('user.name', 'Rocabot')
+									.addConfig('user.email', 'rocabot@dev.fr')
+									.add(__dirname + '/../events/message/url_whitelist.txt')
+									.commit('Added new url from runtime')
+									.push('origin', 'messageFilter')
+									.then((pushResp) => console.log('push finished', pushResp))
+									.catch((err) => console.error('failed: ', err));
+							})
+						
 
-
-				simpleGit()
-					.addConfig('user.name', 'Rocabot')
-					.addConfig('user.email', 'rocabot@dev.fr')
-					.add(__dirname + '/../events/message/url_whitelist.txt')
-					.commit('Added new url from runtime')
-					.push('origin', 'master')
-					.then(() => console.log('push finished'))
-					.catch((err) => console.error('failed: ', err));
+					})
+					.catch((err) => console.error('Could not clone: ', err));
+					
 				break;
 
 		}
