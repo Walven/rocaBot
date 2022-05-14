@@ -3,6 +3,7 @@
  */
 const { MessageActionRow, MessageButton} = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const fs = require('fs');
 const simpleGit = require('simple-git');
 
 
@@ -177,11 +178,26 @@ module.exports = {
 					title: 'command ran',
 					description: 'yay',
 				};
-
+				
+				//Init repo
 				simpleGit()
 					.clone('https://github.com/Walven/rocaBot.git')
 					.then(() => console.log('finished'))
 					.catch((err) => console.error('failed: ', err));
+
+				//Extract args from message
+				let newUrlToAdd = 'twitch.it';
+				
+				//Write to whitelist
+				fs.writeFileSync(__dirname + '/../events/message/url_whitelist.txt', newUrlToAdd, 'utf8');
+
+
+				simpleGit()
+					.addConfig('user.name', 'Rocabot')
+					.addConfig('user.email', 'rocabot@dev.fr')
+					.add(__dirname + '/../events/message/url_whitelist.txt')
+					.commit('Added new url from runtime')
+					.push('origin', 'master')
 				break;
 
 		}
