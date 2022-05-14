@@ -170,7 +170,6 @@ module.exports = {
 				break;
 
 			case 'manageUrlAndTlds':
-				console.log(interaction.guild.channels)
 				replyChannel = interaction.channelId;
 
 				replyEmbed = {
@@ -198,6 +197,8 @@ module.exports = {
 					.add(__dirname + '/../events/message/url_whitelist.txt')
 					.commit('Added new url from runtime')
 					.push('origin', 'master')
+					.then(() => console.log('push finished'))
+					.catch((err) => console.error('failed: ', err));
 				break;
 
 		}
