@@ -183,12 +183,14 @@ module.exports = {
 					.clone('https://github.com/Walven/rocaBot.git')
 					.then(() => console.log('finished'))
 					.catch((err) => console.error('failed: ', err));
-
+				
+				console.log('inited repo')
 				//Extract args from message
 				let newUrlToAdd = 'twitch.it';
 				
 				//Write to whitelist
 				fs.writeFileSync(__dirname + '/../events/message/url_whitelist.txt', newUrlToAdd, 'utf8');
+				console.log('wrote to file');
 
 
 				simpleGit()
