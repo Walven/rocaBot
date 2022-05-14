@@ -184,24 +184,25 @@ module.exports = {
 					.then(() => {
 						simpleGit(__dirname + '/../../rocaBot')
 							//REMOVE THIS BEFORE PROD
-							.checkout('origin/messageFilter')
-							.then(() => { 
-								console.log('checked out messageFilter')
-								
-								console.log('Cloned')
+							.fetch(['--all'])
+							.checkout('messageFilter')
+							.branch()
+							.then((resp) => {
 								//Extract args from message
-								let newUrlToAdd = 'twitch.it';
+								let newUrlToAdd = 'twitch.ittt';
 							
 								//Write to whitelist
 								fs.mkdirSync(__dirname + '/../../rocaBot/src/events/message', {recursive: true}, )
-								fs.appendFile(__dirname + '/../../rocaBot/src/events/message/url_whitelist.txt', newUrlToAdd, { flag: 'a+' }, err => {console.log(err)});
+								fs.appendFileSync(__dirname + '/../../rocaBot/src/events/message/url_whitelist.txt', newUrlToAdd, { flag: 'a+' });
 								console.log('wrote to filedd');
 		
 								//Commit & push
 								simpleGit(__dirname + '/../../rocaBot')
 									.addConfig('user.name', 'Rocabot')
 									.addConfig('user.email', 'rocabot@dev.fr')
-									.add(__dirname + '/../events/message/url_whitelist.txt')
+									.status()
+									.add(__dirname + '/../../rocaBot/src/events/message/url_whitelist.txt')
+									.status()
 									.commit('Added new url from runtime')
 									.push('origin', 'messageFilter')
 									.then((pushResp) => console.log('push finished', pushResp))
@@ -212,19 +213,19 @@ module.exports = {
 					})
 					.catch((err) => console.error('Could not clone: ', err));
 					
-				break;
+			break;
 
 		}
 
-		if (buttons.length) {
+		/*if (buttons.length) {
 			const row = new MessageActionRow()
 				.addComponents(buttons);
 			interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed], components: [row] });
 		} else {
 			interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed] });
-		}
+		}*/
 		
-		await interaction.reply({ content: 'Message sent!', ephemeral: true });
+		//await interaction.reply({ content: 'Message sent!', ephemeral: true });
 		
 	},
 };
