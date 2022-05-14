@@ -3,6 +3,8 @@
  */
 const { MessageActionRow, MessageButton} = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const simpleGit = require('simple-git');
+
 
 // Global config
 const config = require('../../config.json');
@@ -57,6 +59,7 @@ module.exports = {
 					['Send lang role prompt', 'sendLangRolePrompt'],
 					['Send PSDK access prompt', 'sendPSDKAccessPrompt'],
 					['Send Event prompt', 'sendEventPrompt'],
+					['Manage allowed URLs and TLDs', 'manageUrlAndTlds']
 				])),
 
 	// Command permissions
@@ -164,11 +167,30 @@ module.exports = {
 				);
 
 				break;
+
+			case 'manageUrlAndTlds':
+				console.log(interaction.guild.channels)
+				replyChannel = interaction.channelId;
+
+				replyEmbed = {
+					color: 0x5aa264,
+					title: 'command ran',
+					description: 'yay',
+				};
+
+				simpleGit().remote(['-v']).then(res => console.log(res))
+				break;
+
 		}
 
-		const row = new MessageActionRow()
-					.addComponents(buttons);
-		interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed], components: [row] });
+		if (buttons.length) {
+			const row = new MessageActionRow()
+				.addComponents(buttons);
+			interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed], components: [row] });
+		} else {
+			interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed] });
+		}
+		
 		await interaction.reply({ content: 'Message sent!', ephemeral: true });
 		
 	},
