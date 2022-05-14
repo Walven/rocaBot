@@ -178,7 +178,10 @@ module.exports = {
 					description: 'yay',
 				};
 
-				simpleGit().remote(['-v']).then(res => console.log(res))
+				simpleGit()
+					.clone('https://github.com/Walven/rocaBot.git')
+					.then(() => console.log('finished'))
+					.catch((err) => console.error('failed: ', err));
 				break;
 
 		}
