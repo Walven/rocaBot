@@ -27,16 +27,16 @@ const commandConfig = {
 		},
 	},
 	psdkAccess: {
-		buttonLabel: 'Access to Pokémon SDK download ・ Accéder au téléchargement de Pokémon SDK',
+		buttonLabel: 'Access to Pokémon Studio download ・ Accéder au téléchargement de Pokémon Studio',
 		message: {
-			en: `${config.customEmoji.ballEn} \u200b Access the Pokémon SDK download by clicking the "Access" button below.`,
-			fr: `${config.customEmoji.ballFr} \u200b Accédez au téléchargement de Pokémon SDK en cliquant sur le bouton "Accéder" ci-dessous.`,
+			en: `${config.customEmoji.ballEn} \u200b Access the Pokémon Studio download by clicking the "Access" button below.`,
+			fr: `${config.customEmoji.ballFr} \u200b Accédez au téléchargement de Pokémon Studio en cliquant sur le bouton "Accéder" ci-dessous.`,
 		},
 	},
 	eventPrompt: {
 		buttonLabel: 'I want to participate ・ Je veux participer',
 		message: {
-			en: `${config.customEmoji.ballEn} \u200b Participate in the Fall Guys eventby clicking the "Access" button below.`,
+			en: `${config.customEmoji.ballEn} \u200b Participate in the Fall Guys event by clicking the "Access" button below.`,
 			fr: `${config.customEmoji.ballFr} \u200b Participer à l'événement Fall Guys en cliquant sur le bouton "Accéder" ci-dessous.`,
 		},
 	}
