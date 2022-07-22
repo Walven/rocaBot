@@ -29,8 +29,8 @@ const commandConfig = {
 	psdkAccess: {
 		buttonLabel: 'Access to Pokémon Studio download ・ Accéder au téléchargement de Pokémon Studio',
 		message: {
-			en: `${config.customEmoji.ballEn} \u200b Access the Pokémon Studio download by clicking the "Access" button below.`,
-			fr: `${config.customEmoji.ballFr} \u200b Accédez au téléchargement de Pokémon Studio en cliquant sur le bouton "Accéder" ci-dessous.`,
+			en: `${config.customEmoji.ballEn} \u200b Access the Pokémon Studio (including Pokémon SDK) download by clicking the "Access" button below.`,
+			fr: `${config.customEmoji.ballFr} \u200b Accédez au téléchargement de Pokémon Studio (incluant Pokémon SDK) en cliquant sur le bouton "Accéder" ci-dessous.`,
 		},
 	},
 	eventPrompt: {
