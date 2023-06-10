@@ -2,7 +2,7 @@ require('dotenv').config({ path: __dirname + '/../.env' });
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES] });
 
 // Set local commands
 client.commands = new Collection();
