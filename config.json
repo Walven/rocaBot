@@ -3,12 +3,13 @@
     "id": "143824995867557888"
   },
   "channel": {
-    "bot": "733359360968884244",
-    "psdkAccess": "819201697582415902",
-    "psdkLinks": "360864668140568596",
+    "home": "home",
+    "browseChannels": "browse",
+    "customizeChannels": "customize",
     "rules": "360855474284789772",
-    "roles": "880006160193826827",
-    "welcome": "143824995867557888"
+    "welcome": "143824995867557888",
+    "bot": "733359360968884244",
+    "psdkLinks": "360864668140568596"
   },
   "customEmoji": {
     "ballEn": "<:ball_world:883365457770463303>",
