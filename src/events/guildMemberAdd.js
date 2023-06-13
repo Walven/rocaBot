@@ -10,7 +10,7 @@ module.exports = {
 		+ 'You can also discuss the software and your projects, and meet a whole community made out of Pokémon and creation fans!\n\n'
 		+ 'Now you can:\n'
 		+ `${config.customEmoji.dot} Download Pokémon Studio (including Pokémon SDK) in ${channelMention(config.channel.psdkLinks)}\n`
-		+ `${config.customEmoji.dot} Customize your server experience in the ${channelMention(config.channel.customize)} section or browse through all existing channels in ${channelMention(config.channel.browse)}\n`
+		+ `${config.customEmoji.dot} Customize your server experience in the "Channels & Roles" section \n`
 		+ `${config.customEmoji.dot} Take the time to re-read the ${channelMention(config.channel.rules)}!`;
 
 		const messageFr = `${bold(`${config.customEmoji.ballFr}  Bienvenue sur le serveur de la communauté Pokémon Workshop, ${userMention(member.id)} !`)}\n`
@@ -18,7 +18,7 @@ module.exports = {
 		+ 'Tu pourras aussi discuter du logiciel et de tes projets, ainsi que rencontrer toute une communauté de fans de Pokémon et de création !\n\n'
 		+ 'Tu peux maintenant :\n'
 		+ `${config.customEmoji.dot} Télécharger Pokémon Studio (incluant Pokémon SDK) dans ${channelMention(config.channel.psdkLinks)}\n`
-		+ `${config.customEmoji.dot} Personnaliser ton expérience sur le serveur dans la section ${channelMention(config.channel.customize)} ou parcourir tous les salons existants dans ${channelMention(config.channel.browse)}\n`
+		+ `${config.customEmoji.dot} Personnaliser ton expérience sur le serveur dans la section \"Salons et rôles\" \n`
 		+ `${config.customEmoji.dot} Prendre le temps de relire les ${channelMention(config.channel.rules)} !`;
 
 		const finalMessage = messageEn + '\n\n' + config.ui.divider + '\n\n' + messageFr;
