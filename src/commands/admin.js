@@ -3,6 +3,9 @@
  */
 const { MessageActionRow, MessageButton} = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const fs = require('fs');
+const simpleGit = require('simple-git');
+
 
 // Global config
 const config = require('../../config.json');
@@ -57,6 +60,7 @@ module.exports = {
 					['Send lang role prompt', 'sendLangRolePrompt'],
 					['Send PSDK access prompt', 'sendPSDKAccessPrompt'],
 					['Send Event prompt', 'sendEventPrompt'],
+					['Manage allowed URLs and TLDs', 'manageUrlAndTlds']
 				])),
 
 	// Command permissions
@@ -164,12 +168,64 @@ module.exports = {
 				);
 
 				break;
+
+			case 'manageUrlAndTlds':
+				replyChannel = interaction.channelId;
+
+				replyEmbed = {
+					color: 0x5aa264,
+					title: 'command ran',
+					description: 'yay',
+				};
+				
+				//Clone Repo
+				simpleGit()
+					.clone('https://github.com/Walven/rocaBot.git')
+					.then(() => {
+						simpleGit(__dirname + '/../../rocaBot')
+							//REMOVE THIS BEFORE PROD
+							.fetch(['--all'])
+							.checkout('messageFilter')
+							.branch()
+							.then((resp) => {
+								//Extract args from message
+								let newUrlToAdd = 'twitch.ittt';
+							
+								//Write to whitelist
+								fs.mkdirSync(__dirname + '/../../rocaBot/src/events/message', {recursive: true}, )
+								fs.appendFileSync(__dirname + '/../../rocaBot/src/events/message/url_whitelist.txt', newUrlToAdd, { flag: 'a+' });
+								console.log('wrote to filedd');
+		
+								//Commit & push
+								simpleGit(__dirname + '/../../rocaBot')
+									.addConfig('user.name', 'Rocabot')
+									.addConfig('user.email', 'rocabot@dev.fr')
+									.status()
+									.add(__dirname + '/../../rocaBot/src/events/message/url_whitelist.txt')
+									.status()
+									.commit('Added new url from runtime')
+									.push('origin', 'messageFilter')
+									.then((pushResp) => console.log('push finished', pushResp))
+									.catch((err) => console.error('failed: ', err));
+							})
+						
+
+					})
+					.catch((err) => console.error('Could not clone: ', err));
+					
+			break;
+
 		}
 
-		const row = new MessageActionRow()
-					.addComponents(buttons);
-		interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed], components: [row] });
-		await interaction.reply({ content: 'Message sent!', ephemeral: true });
+		/*if (buttons.length) {
+			const row = new MessageActionRow()
+				.addComponents(buttons);
+			interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed], components: [row] });
+		} else {
+			interaction.guild.channels.cache.get(replyChannel).send({ embeds: [replyEmbed] });
+		}*/
+		
+		//await interaction.reply({ content: 'Message sent!', ephemeral: true });
 		
 	},
 };

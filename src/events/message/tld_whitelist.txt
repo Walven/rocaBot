@@ -1,0 +1,6 @@
+fr
+com
+net
+eu
+info
+org
